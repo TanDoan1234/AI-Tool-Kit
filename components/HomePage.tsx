@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon, ChartBarIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon } from './icons';
 
 interface HomePageProps {
   onNavigateToFormTool: () => void;
@@ -54,6 +54,24 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
                 className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-700"
             >
                 <p className="text-gray-500">{t('homepage.comingSoon')}</p>
+            </div>
+        </div>
+
+        <div className="text-center mt-24 animate-fade-in-up animation-delay-400">
+            <div className="flex justify-center items-center gap-8 mb-6">
+                <a href="https://github.com/TanDoan1234" target="_blank" rel="noopener noreferrer" title="GitHub" className="text-gray-400 hover:text-white transition-colors">
+                    <GithubIcon className="w-8 h-8" />
+                </a>
+                <a href="https://linkedin.com/in/tandoanminh/" target="_blank" rel="noopener noreferrer" title="LinkedIn" className="text-gray-400 hover:text-white transition-colors">
+                    <LinkedinIcon className="w-8 h-8" />
+                </a>
+                <a href="mailto:doanminhtan.dev@gmail.com" title="Gmail" className="text-gray-400 hover:text-white transition-colors">
+                    <GmailIcon className="w-8 h-8" />
+                </a>
+            </div>
+            <p className="text-gray-300 mb-4">Nếu bạn thấy hay hãy ủng hộ mình 1 ly cf nhé ^^</p>
+            <div className="inline-block p-2 bg-white rounded-xl shadow-md">
+                <img src="https://i.ibb.co/Q9xG0t2/qr-code.png" alt="QR Code for donation" className="w-36 h-36 rounded-lg" />
             </div>
         </div>
       </div>
