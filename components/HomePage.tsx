@@ -1,18 +1,43 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon, ArrowPathIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon, ArrowPathIcon, DatabaseIcon, ShieldCheckIcon } from './icons';
 
 interface HomePageProps {
   onNavigateToFormTool: () => void;
   onNavigateToDiagramTool: () => void;
   onNavigateToDocstringTool: () => void;
   onNavigateToDataTransformerTool: () => void;
+  onNavigateToSqlQueryWriterTool: () => void;
+  onNavigateToUnitTestGeneratorTool: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool, onNavigateToDocstringTool, onNavigateToDataTransformerTool }) => {
+const HomePage: React.FC<HomePageProps> = ({ 
+  onNavigateToFormTool, 
+  onNavigateToDiagramTool, 
+  onNavigateToDocstringTool, 
+  onNavigateToDataTransformerTool,
+  onNavigateToSqlQueryWriterTool,
+  onNavigateToUnitTestGeneratorTool
+}) => {
   const { t } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const qrCodeUrl = "https://i.ibb.co/VYnm5RB3/qr-code.jpg";
+
+  const ToolCard: React.FC<{onClick: () => void; icon: React.ReactNode; titleKey: string; descriptionKey: string;}> = ({ onClick, icon, titleKey, descriptionKey }) => (
+      <div 
+        onClick={onClick}
+        className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
+      >
+          <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
+              {icon}
+          </div>
+          <h3 className="text-xl font-bold text-white mb-2">{t(titleKey as any)}</h3>
+          <p className="text-gray-400 flex-grow text-sm">{t(descriptionKey as any)}</p>
+          <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
+              {t('homepage.launchTool')} &rarr;
+          </span>
+      </div>
+  );
 
   return (
     <>
@@ -23,66 +48,43 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
               <p className="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-400">{t('homepage.author')}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 animate-fade-in-up animation-delay-200">
-              {/* Form Tool Card */}
-              <div 
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up animation-delay-200">
+              <ToolCard
                   onClick={onNavigateToFormTool}
-                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
-              >
-                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
-                      <DocumentTextIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool1.title')}</h3>
-                  <p className="text-gray-400 flex-grow">{t('homepage.tool1.description')}</p>
-                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
-                      {t('homepage.launchTool')} &rarr;
-                  </span>
-              </div>
-
-              {/* Diagram Tool Card */}
-              <div 
+                  icon={<DocumentTextIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool1.title"
+                  descriptionKey="homepage.tool1.description"
+              />
+               <ToolCard
                   onClick={onNavigateToDiagramTool}
-                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
-              >
-                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
-                      <ChartBarIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool2.title')}</h3>
-                  <p className="text-gray-400 flex-grow">{t('homepage.tool2.description')}</p>
-                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
-                      {t('homepage.launchTool')} &rarr;
-                  </span>
-              </div>
-              
-              {/* Docstring Tool Card */}
-              <div 
+                  icon={<ChartBarIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool2.title"
+                  descriptionKey="homepage.tool2.description"
+              />
+              <ToolCard
                   onClick={onNavigateToDocstringTool}
-                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
-              >
-                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
-                      <CodeIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool3.title')}</h3>
-                  <p className="text-gray-400 flex-grow">{t('homepage.tool3.description')}</p>
-                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
-                      {t('homepage.launchTool')} &rarr;
-                  </span>
-              </div>
-
-               {/* Data Transformer Tool Card */}
-               <div 
+                  icon={<CodeIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool3.title"
+                  descriptionKey="homepage.tool3.description"
+              />
+              <ToolCard
                   onClick={onNavigateToDataTransformerTool}
-                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
-              >
-                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
-                      <ArrowPathIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool4.title')}</h3>
-                  <p className="text-gray-400 flex-grow">{t('homepage.tool4.description')}</p>
-                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
-                      {t('homepage.launchTool')} &rarr;
-                  </span>
-              </div>
+                  icon={<ArrowPathIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool4.title"
+                  descriptionKey="homepage.tool4.description"
+              />
+              <ToolCard
+                  onClick={onNavigateToSqlQueryWriterTool}
+                  icon={<DatabaseIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool5.title"
+                  descriptionKey="homepage.tool5.description"
+              />
+              <ToolCard
+                  onClick={onNavigateToUnitTestGeneratorTool}
+                  icon={<ShieldCheckIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool6.title"
+                  descriptionKey="homepage.tool6.description"
+              />
           </div>
 
           <div className="text-center mt-24 animate-fade-in-up animation-delay-400">
