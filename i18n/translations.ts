@@ -4,7 +4,7 @@
 const en = {
   homepage: {
     title: 'Useful Toolkit',
-    author: 'From the team behind the Gemini API',
+    author: 'By Tan Doan',
     tool1: {
       title: 'Form Generator',
       description: 'Instantly create multi-page Google Forms from text, markdown, or even existing form structures.',
@@ -184,7 +184,7 @@ const en = {
 const vi: typeof en = {
   homepage: {
     title: 'Bộ Công cụ Hữu ích',
-    author: 'Từ đội ngũ phát triển Gemini API',
+    author: 'Tác giả Tân Đoàn',
     tool1: {
       title: 'Tạo biểu mẫu',
       description: 'Tạo ngay biểu mẫu Google Forms nhiều trang từ văn bản, markdown, hoặc thậm chí từ cấu trúc biểu mẫu có sẵn.',
