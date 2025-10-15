@@ -42,25 +42,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ isOpen, initialKeys, onSave, 
             </p>
 
             <div className="space-y-4">
-            <div>
-                <label htmlFor="geminiApiKey" className="block text-sm font-medium text-gray-300">
-                {t('modal.geminiKeyLabel')}
-                </label>
-                <input
-                type="password"
-                id="geminiApiKey"
-                name="geminiApiKey"
-                value={keys.geminiApiKey}
-                onChange={handleChange}
-                className="mt-1 block w-full bg-gray-700 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500"
-                />
-                <p className="mt-1 text-xs text-gray-500">
-                {t('modal.geminiKeyHint')}{' '}
-                <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:underline">
-                    Google AI Studio
-                </a>.
-                </p>
-            </div>
+            {/* FIX: Removed Gemini API Key input to comply with guidelines that it must be set via environment variable. */}
             <div>
                 <label htmlFor="googleApiKey" className="block text-sm font-medium text-gray-300">
                 {t('modal.googleApiLabel')}

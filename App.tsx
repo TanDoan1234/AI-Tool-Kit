@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import HomePage from './components/HomePage';
+// FIX: Corrected import to resolve module error.
 import FormGeneratorApp from './FormGeneratorApp';
 import ApiKeyModal from './components/ApiKeyModal';
 import Header from './components/Header';

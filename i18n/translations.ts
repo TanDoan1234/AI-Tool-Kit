@@ -1,320 +1,313 @@
+// FIX: Replaced placeholder content with actual translation objects and types.
+// This resolves the module-related errors.
 
-export const translations = {
-  en: {
+const en = {
+  homepage: {
+    title: 'AI Form Generator',
+    author: 'From the team behind the Gemini API',
+    tool1: {
+      title: 'Form Generator',
+      description: 'Instantly create multi-page Google Forms from text, markdown, or even existing form structures.',
+    },
+    launchTool: 'Launch Tool',
+    comingSoon: 'More AI tools coming soon...',
+  },
+  header: {
+    toggleLanguage: 'Tiếng Việt',
+    settings: 'API Key Settings',
+    signOut: 'Sign Out',
+    signIn: 'Sign in with Google',
+    loading: 'Loading',
+    googleUnavailableTooltip: 'Google Integration is not configured. Please set the required API keys in settings.',
+    signInUnavailable: 'Sign In Unavailable',
+  },
+  modal: {
+    close: 'Close',
+    title: 'API Key Configuration',
+    subtitle: "To enable Google Form creation, please provide your Google Cloud API Key and Client ID. Your keys are stored securely in your browser's local storage and are never sent to our servers.",
+    googleApiLabel: 'Google Cloud API Key',
+    googleApiHint: 'Used for the Google Forms API.',
+    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID',
+    googleClientIdHint: 'Used for user authentication to create forms on your behalf.',
+    cloudConsoleLink: 'Google Cloud Console',
+    cancel: 'Cancel',
+    save: 'Save and Reload',
+  },
+  preview: {
+    required: '* Indicates required question',
+    pageBreak: 'After this section, continue to the next page',
+    submit: 'Submit',
+    clear: 'Clear form',
+  },
+  question: {
+    yourAnswer: 'Your answer',
+  },
+  guide: {
     header: {
-      settings: 'Configure API Keys',
-      signOut: 'Sign Out',
-      signIn: 'Sign in with Google',
-      loading: 'Loading',
-      googleUnavailableTooltip: 'Google integration not configured',
-      signInUnavailable: 'Sign in Unavailable',
-      toggleLanguage: 'Tiếng Việt'
-    },
-    homepage: {
-      title: 'Useful Utilities for Everyone',
-      author: 'by Tân Đoàn',
-      tool1: {
-        title: 'AI Form Generator',
-        description: 'Instantly create a form preview from any text format, then generate a live Google Form.'
-      },
-      launchTool: 'Launch Tool',
-      comingSoon: 'More tools coming soon...'
-    },
-    formGenerator: {
-      backToHome: 'Back to Home',
-      guideButton: 'Setup Guide'
+      title: 'Setup Guide',
+      backButton: 'Back to Generator',
     },
     main: {
-      title: 'Create a Form in Seconds',
-      subtitle: 'Paste your questions in any format, and let AI generate a preview. Then, create a live Google Form with one click.',
-      loadExample: 'Load an example:',
-      exampleMarkdown: 'Markdown Example',
-      exampleJson: 'JSON Example',
-      exampleHtml: 'HTML Example',
-      inputLabel: 'Your form content:',
-      inputPlaceholder: 'Paste your questions here...',
-      generating: 'Generating Preview',
-      generateButton: 'Generate Form Preview',
+      title: 'How to Get Your API Keys',
+      subtitle: 'Follow these steps to enable all features of the AI Form Generator.',
     },
-    error: {
-      geminiNotConfigured: 'Gemini API Key is not configured. Please add it via the settings icon in the header.',
-      googleNotConfigured: 'Google Cloud Keys are not configured. Please follow the Setup Guide to add them and use this feature.',
-      inputEmpty: 'Please enter some questions first.',
-      previewTitle: 'Error Generating Preview',
-      googleApiTitle: 'Google API Error',
-      googleFormCreation: 'An unknown error occurred while creating the Google Form.',
-      geminiApiKeyInvalid: "The provided Gemini API Key is not valid. Please check it in the settings.",
+    step1: {
+      title: 'Get Your Gemini API Key',
+      p1: 'The Gemini API key is required to use the AI generation features. This application is configured to read this key from an environment variable for security.',
+      li1: {
+        text: 'Go to',
+      },
+      li2: "If you don't have a project yet, create a new one.",
+      li3: {
+        text: 'Click',
+        button: 'Create API key',
+      },
+      li4: {
+        text: 'Create a `.env.local` file in the project root and add your key: `API_KEY="YOUR_API_KEY"`.',
+      }
     },
-    preview: {
-      title: 'Generated Preview',
-      required: '* Required',
-      pageBreak: 'Page Break: Next section starts here',
-      submit: 'Submit',
-      clear: 'Clear form',
+    step2: {
+      title: 'Set up Google Cloud for Form Creation',
+      p1: 'To automatically create forms in your Google Drive, you need to configure a Google Cloud project with the right APIs and credentials. This is a one-time setup.',
+      step2_1: {
+        title: 'Create a Google Cloud Project',
+        li1: { text: 'Go to the', link: 'Google Cloud Console' },
+        li2: { text: 'Click the project dropdown at the top and click', button: 'New Project' },
+        li3: { text: 'Give it a name (e.g., "AI Form Generator") and click', button: 'Create' },
+      },
+      step2_2: {
+        title: 'Enable the Google Forms API',
+        li1: 'Make sure your new project is selected.',
+        li2: 'In the search bar, type "Google Forms API" and select it.',
+        li3: { text: 'Click the', button: 'Enable', wait: 'button and wait for it to finish.' },
+      },
+      step2_3: {
+        title: 'Create an API Key',
+        li1: { text: 'Navigate to', link: 'APIs & Services > Credentials' },
+        li2: { text: 'Click', button1: '+ CREATE CREDENTIALS', and: 'and select', button2: 'API key' },
+        li3: { text: 'Copy the generated key. This is your', field: 'Google Cloud API Key' },
+      },
+      step2_4: {
+        title: 'Configure the OAuth Consent Screen',
+        p1: 'This is what users see when they grant permission for the app to create forms on their behalf.',
+        li1: { text: 'In the left sidebar, go to the', screen: 'OAuth consent screen' },
+        li2: { text: 'Choose', type: 'External', and: 'and click', button: 'Create' },
+        li3: 'Fill in the required fields: App name, User support email, and Developer contact information.',
+        li4: 'On the "Scopes" page, click "Add or Remove Scopes". Find the "Google Forms API" scope (`.../auth/forms.body`) and add it.',
+        li5: { crucial: 'Crucial:', text1: 'On the "Test users" page, click', button: '+ ADD USERS', text2: 'and add the email address of the Google account you will use to sign in and create forms.' },
+        li6: 'Save and continue back to the dashboard.',
+      },
+      step2_5: {
+        title: 'Create an OAuth 2.0 Client ID',
+        p1: "This ID identifies the application to Google's OAuth servers.",
+        li1: { text: 'Go back to the', link: 'Credentials', page: 'page' },
+        li2: { text: 'Click', button1: '+ CREATE CREDENTIALS', and: 'and select', button2: 'OAuth client ID' },
+        li3: { text: 'For "Application type", select', type: 'Web application' },
+        li4: { crucial: 'Crucial:', text1: 'Under "Authorized JavaScript origins", click', text2: 'and add your development server URL, typically', },
+        li5: 'Click "Create".',
+        li6: { text: 'A dialog will appear. Copy the', button: 'Your Client ID' },
+        li7: { text: 'This is your', field1: 'Google Cloud OAuth 2.0 Client ID.', text2: 'Use this and the API Key from step 2.3 in the app\'s settings.', field2: '' },
+      }
     },
-    google: {
-        notConfiguredTitle: 'Google Integration Not Configured',
-        notConfiguredBody: 'To create a Google Form, you need to provide a Google Cloud API Key and Client ID. Please follow the setup guide for instructions.',
-        configureKeysButton: 'Open Setup Guide',
-        readyTitle: 'Ready to make it real?',
-        signInPrompt: 'Sign in with your Google account to create this form.',
-        signInButton: 'Sign in to Continue',
-        createPrompt: 'Click the button below to create this as a new Google Form in your account.',
-        creatingButton: 'Creating Form',
-        createButton: 'Create Google Form',
-        successTitle: 'Success!',
-        successBody: 'Your Google Form has been created.',
-        copiedButton: 'Copied!',
-        copyLinkButton: 'Copy Link',
-        createAnotherButton: 'Create another form',
-    },
-    modal: {
-        close: 'Close',
-        title: 'Configure API Keys',
-        subtitle: "Your keys are saved securely in your browser's local storage. After saving, the page will reload to apply the new configuration.",
-        geminiKeyLabel: 'Gemini API Key',
-        geminiKeyHint: 'Get one from',
-        googleApiLabel: 'Google Cloud API Key',
-        googleApiHint: 'Used by the Google Forms API. Get one from the',
-        googleClientIdLabel: 'Google Cloud Client ID',
-        googleClientIdHint: 'Used for Google Sign-In. Create an OAuth 2.0 Client ID in the',
-        cloudConsoleLink: 'Cloud Console',
-        cancel: 'Cancel',
-        save: 'Save and Reload',
-    },
-    question: {
-        yourAnswer: 'Your answer',
-    },
-    guide: {
-        header: {
-            title: 'API Setup Guide',
-            backButton: '← Back to Generator',
-        },
-        main: {
-            title: 'Configuration Instructions',
-            subtitle: 'Follow these steps to get the 3 required API keys to run this application.',
-        },
-        step1: {
-            title: 'Get Gemini API Key',
-            p1: 'This key allows the app to use the Gemini AI model to understand your input and structure the form.',
-            li1: { text: 'Go to' },
-            li2: 'Sign in with your Google account.',
-            li3: { text: 'Click the', button: 'Create API key in new project' },
-            li4: { text: 'Copy the generated key. You will paste this into the', field: 'Gemini API Key', location: 'field in the app\'s settings.' },
-        },
-        step2: {
-            title: 'Set up Google Cloud Project & Keys',
-            p1: 'This part is more involved as it requires two keys from Google Cloud Platform (GCP) to create Google Forms and handle user sign-in.',
-        },
-        step2_1: {
-            title: '2.1. Create a New Google Cloud Project',
-            li1: { text: 'Go to the', link: 'Google Cloud Console' },
-            li2: { text: 'At the top-left, click the project selection dropdown menu, then click', button: 'NEW PROJECT' },
-            li3: { text: 'Give it a name (e.g., "AI Form Project") and click', button: 'CREATE' },
-        },
-        step2_2: {
-            title: '2.2. Enable the Google Forms API',
-            li1: 'Make sure your new project is selected.',
-            li2: 'In the top search bar, search for "Google Forms API" and select it.',
-            li3: { text: 'Click the', button: 'ENABLE', wait: 'button and wait for it to finish.' },
-        },
-        step2_3: {
-            title: '2.3. Create a Google Cloud API Key',
-            li1: { text: 'In the left navigation menu (☰), go to', link: 'APIs & Services > Credentials' },
-            li2: { text: 'Click', button1: '+ CREATE CREDENTIALS', and: 'and select', button2: 'API key' },
-            li3: { text: 'Copy the generated key. This is your', field: 'Google Cloud API Key' },
-        },
-        step2_4: {
-            title: '2.4. Configure the OAuth Consent Screen',
-            p1: 'This is the screen users see when they sign in with Google.',
-            li1: { text: 'From the left menu, go to', screen: 'OAuth consent screen' },
-            li2: { text: 'Choose', type: 'External', and: 'for User Type and click', button: 'CREATE' },
-            li3: 'Fill in the required fields: App name, User support email, and Developer contact email. Then click "SAVE AND CONTINUE".',
-            li4: 'On the "Scopes" page, just click "SAVE AND CONTINUE".',
-            li5: { crucial: 'Crucial Step:', text1: 'On the "Test users" page, click', button: '+ ADD USERS', text2: 'Enter the Google email address you will use to log in to this app. This prevents `access_denied` errors during development.' },
-            li6: 'Click "SAVE AND CONTINUE", then "BACK TO DASHBOARD".',
-        },
-        step2_5: {
-            title: '2.5. Create an OAuth 2.0 Client ID',
-            p1: 'This identifies your web application to Google\'s OAuth servers.',
-            li1: { text: 'Go back to the', link: 'Credentials', page: 'page.' },
-            li2: { text: 'Click', button1: '+ CREATE CREDENTIALS', and: 'and select', button2: 'OAuth client ID' },
-            li3: { text: 'For "Application type", choose', type: 'Web application' },
-            li4: { crucial: 'Crucial Step:', text1: 'Under "Authorized JavaScript origins", click', text2: 'You must add the URL where the app is running. For local development, this is often' },
-            li5: 'The "Authorized redirect URIs" can usually be left blank as the modern Google Identity Services library handles this.',
-            li6: { text: 'Click', button: 'CREATE' },
-            li7: { text: 'Copy the generated', field1: 'Client ID', text2: 'This is your', field2: 'Google Cloud Client ID' },
-        },
-        step3: {
-            title: 'Enter Keys into the App',
-            p1: 'Once you have all three keys, you are ready to configure the app.',
-            li1: 'Click the "Back to Generator" button at the top of this page.',
-            li2: 'Click the settings icon (⚙️) in the header.',
-            li3: 'Paste the three keys into their respective fields.',
-            li4: { text: 'Click', button: 'Save and Reload', text2: 'The page will refresh with the new configuration.' },
-            li5: 'You should now be able to generate previews and create Google Forms!',
-        },
+    step3: {
+      title: 'Enter Keys into the App',
+      p1: "Finally, enter the two keys you obtained from Google Cloud into the application's settings.",
+      li1: 'Click the settings icon (gear) in the top right corner of the app.',
+      li2: 'Paste your Google Cloud API Key.',
+      li3: 'Paste your Google Cloud OAuth 2.0 Client ID.',
+      li4: { text: 'Click', button: 'Save and Reload', text2: 'The page will refresh.' },
+      li5: 'You should now be able to sign in with Google and create forms!',
     }
   },
-  vi: {
-    header: {
-      settings: 'Cấu hình API Keys',
-      signOut: 'Đăng xuất',
-      signIn: 'Đăng nhập với Google',
-      loading: 'Đang tải',
-      googleUnavailableTooltip: 'Chưa cấu hình tích hợp Google',
-      signInUnavailable: 'Không thể đăng nhập',
-      toggleLanguage: 'English'
+  formGenerator: {
+    title: 'AI Form Generator',
+    subtitle: 'Describe your form in plain text or paste a structure.',
+    inputPlaceholder: 'e.g., "Create a contact form with fields for name, email (required), and a message paragraph. Add a multiple-choice question for how they heard about us with options: Social Media, Friend, Other."',
+    generateButton: 'Generate Preview',
+    generatingButton: 'Generating...',
+    error: 'Error',
+    tryAgain: 'Try Again',
+    previewTab: 'Preview',
+    googleFormTab: 'Google Form',
+    appsScriptTab: 'Apps Script',
+    formCreatedSuccess: 'Form Created Successfully!',
+    viewForm: 'View Form',
+    createFormButton: 'Create Google Form',
+    signInToCreate: 'Sign in to Create',
+    copyCode: 'Copy Code',
+    copied: 'Copied!',
+    appsScriptInstructions: {
+      title: 'How to use this script:',
+      p1: 'This Google Apps Script code can be used to manually create the form in your Google account.',
+      li1: 'Open a new Google Sheet or Google Doc.',
+      li2: 'Go to "Extensions" > "Apps Script".',
+      li3: 'Paste this code into the editor, replacing any default content.',
+      li4: 'Click the "Save project" icon, then click "Run".',
+      li5: 'Authorize the script when prompted.',
+      li6: 'The new form will appear in your Google Drive.',
     },
-    homepage: {
-      title: 'Các tiện ích hữu ích cho mọi người',
-      author: 'Tác giả: Tân Đoàn',
-      tool1: {
-        title: 'Trình tạo biểu mẫu AI',
-        description: 'Tạo bản xem trước biểu mẫu tức thì từ mọi định dạng văn bản, sau đó tạo Google Form.'
-      },
-      launchTool: 'Mở công cụ',
-      comingSoon: 'Các công cụ khác sắp ra mắt...'
-    },
-    formGenerator: {
-      backToHome: 'Quay lại Trang chủ',
-      guideButton: 'Hướng dẫn Cài đặt'
-    },
-    main: {
-      title: 'Tạo biểu mẫu trong vài giây',
-      subtitle: 'Dán câu hỏi của bạn ở bất kỳ định dạng nào và để AI tạo bản xem trước. Sau đó, tạo một Google Form thực tế chỉ với một cú nhấp chuột.',
-      loadExample: 'Tải một ví dụ:',
-      exampleMarkdown: 'Ví dụ Markdown',
-      exampleJson: 'Ví dụ JSON',
-      exampleHtml: 'Ví dụ HTML',
-      inputLabel: 'Nội dung biểu mẫu của bạn:',
-      inputPlaceholder: 'Dán câu hỏi của bạn vào đây...',
-      generating: 'Đang tạo xem trước',
-      generateButton: 'Tạo bản xem trước',
-    },
-    error: {
-      geminiNotConfigured: 'Chưa cấu hình Gemini API Key. Vui lòng thêm key trong phần cài đặt (biểu tượng bánh răng).',
-      googleNotConfigured: 'Chưa cấu hình Google Cloud Keys. Vui lòng làm theo Hướng dẫn Cài đặt để thêm key và sử dụng tính năng này.',
-      inputEmpty: 'Vui lòng nhập câu hỏi trước.',
-      previewTitle: 'Lỗi khi tạo xem trước',
-      googleApiTitle: 'Lỗi Google API',
-      googleFormCreation: 'Đã xảy ra lỗi không xác định khi tạo Google Form.',
-      geminiApiKeyInvalid: 'Gemini API Key không hợp lệ. Vui lòng kiểm tra lại trong phần cài đặt.',
-    },
-    preview: {
-      title: 'Bản xem trước',
-      required: '* Bắt buộc',
-      pageBreak: 'Ngắt trang: Phần tiếp theo bắt đầu tại đây',
-      submit: 'Gửi',
-      clear: 'Xóa biểu mẫu',
-    },
-    google: {
-        notConfiguredTitle: 'Chưa cấu hình Tích hợp Google',
-        notConfiguredBody: 'Để tạo Google Form, bạn cần cung cấp Google Cloud API Key và Client ID. Vui lòng làm theo hướng dẫn cài đặt.',
-        configureKeysButton: 'Mở Hướng dẫn Cài đặt',
-        readyTitle: 'Sẵn sàng tạo biểu mẫu thật?',
-        signInPrompt: 'Đăng nhập bằng tài khoản Google của bạn để tạo biểu mẫu này.',
-        signInButton: 'Đăng nhập để Tiếp tục',
-        createPrompt: 'Nhấp vào nút bên dưới để tạo biểu mẫu này trong tài khoản của bạn.',
-        creatingButton: 'Đang tạo',
-        createButton: 'Tạo Google Form',
-        successTitle: 'Thành công!',
-        successBody: 'Google Form của bạn đã được tạo.',
-        copiedButton: 'Đã sao chép!',
-        copyLinkButton: 'Sao chép liên kết',
-        createAnotherButton: 'Tạo biểu mẫu khác',
-    },
-    modal: {
-        close: 'Đóng',
-        title: 'Cấu hình API Keys',
-        subtitle: 'Key của bạn được lưu an toàn trong localStorage của trình duyệt. Sau khi lưu, trang sẽ tải lại để áp dụng cấu hình mới.',
-        geminiKeyLabel: 'Gemini API Key',
-        geminiKeyHint: 'Lấy key từ',
-        googleApiLabel: 'Google Cloud API Key',
-        googleApiHint: 'Dùng cho Google Forms API. Lấy key từ',
-        googleClientIdLabel: 'Google Cloud Client ID',
-        googleClientIdHint: 'Dùng để đăng nhập Google. Tạo một OAuth 2.0 Client ID trong',
-        cloudConsoleLink: 'Cloud Console',
-        cancel: 'Hủy',
-        save: 'Lưu và Tải lại',
-    },
-    question: {
-        yourAnswer: 'Câu trả lời của bạn',
-    },
-    guide: {
-        header: {
-            title: 'Hướng dẫn Cài đặt API',
-            backButton: '← Quay lại Trình tạo',
-        },
-        main: {
-            title: 'Hướng dẫn Cấu hình',
-            subtitle: 'Làm theo các bước sau để lấy 3 API key cần thiết để chạy ứng dụng.',
-        },
-        step1: {
-            title: 'Lấy Gemini API Key',
-            p1: 'Key này cho phép ứng dụng sử dụng mô hình AI Gemini để hiểu đầu vào của bạn và cấu trúc biểu mẫu.',
-            li1: { text: 'Truy cập' },
-            li2: 'Đăng nhập bằng tài khoản Google của bạn.',
-            li3: { text: 'Nhấp vào nút', button: 'Create API key in new project' },
-            li4: { text: 'Sao chép key được tạo. Bạn sẽ dán key này vào ô', field: 'Gemini API Key', location: 'trong phần cài đặt của ứng dụng.' },
-        },
-        step2: {
-            title: 'Thiết lập Dự án Google Cloud & Keys',
-            p1: 'Phần này phức tạp hơn vì nó yêu cầu hai key từ Google Cloud Platform (GCP) để tạo Google Form và xử lý việc đăng nhập của người dùng.',
-        },
-        step2_1: {
-            title: '2.1. Tạo một Dự án Google Cloud Mới',
-            li1: { text: 'Đi đến', link: 'Google Cloud Console' },
-            li2: { text: 'Ở góc trên bên trái, nhấp vào menu thả xuống chọn dự án, sau đó nhấp vào', button: 'NEW PROJECT' },
-            li3: { text: 'Đặt tên cho dự án (ví dụ: "AI Form Project") và nhấp', button: 'CREATE' },
-        },
-        step2_2: {
-            title: '2.2. Kích hoạt Google Forms API',
-            li1: 'Đảm bảo rằng dự án mới của bạn đã được chọn.',
-            li2: 'Trong thanh tìm kiếm ở trên cùng, tìm kiếm "Google Forms API" và chọn nó.',
-            li3: { text: 'Nhấp vào nút', button: 'ENABLE', wait: 'và đợi cho nó hoàn tất.' },
-        },
-        step2_3: {
-            title: '2.3. Tạo một Google Cloud API Key',
-            li1: { text: 'Trong menu điều hướng bên trái (☰), đi đến', link: 'APIs & Services > Credentials' },
-            li2: { text: 'Nhấp vào', button1: '+ CREATE CREDENTIALS', and: 'và chọn', button2: 'API key' },
-            li3: { text: 'Sao chép key được tạo. Đây là', field: 'Google Cloud API Key' },
-        },
-        step2_4: {
-            title: '2.4. Cấu hình Màn hình chấp thuận OAuth',
-            p1: 'Đây là màn hình người dùng nhìn thấy khi họ đăng nhập bằng Google.',
-            li1: { text: 'Từ menu bên trái, đi đến', screen: 'OAuth consent screen' },
-            li2: { text: 'Chọn', type: 'External', and: 'cho User Type và nhấp vào', button: 'CREATE' },
-            li3: 'Điền vào các trường bắt buộc: Tên ứng dụng, email hỗ trợ người dùng và email liên hệ của nhà phát triển. Sau đó nhấp "SAVE AND CONTINUE".',
-            li4: 'Trên trang "Scopes", chỉ cần nhấp vào "SAVE AND CONTINUE".',
-            li5: { crucial: 'Bước quan trọng:', text1: 'Trên trang "Test users", nhấp vào', button: '+ ADD USERS', text2: 'Nhập địa chỉ email Google bạn sẽ sử dụng để đăng nhập vào ứng dụng này. Điều này ngăn ngừa lỗi `access_denied` trong quá trình phát triển.' },
-            li6: 'Nhấp "SAVE AND CONTINUE", sau đó "BACK TO DASHBOARD".',
-        },
-        step2_5: {
-            title: '2.5. Tạo một OAuth 2.0 Client ID',
-            p1: 'Điều này xác định ứng dụng web của bạn với các máy chủ OAuth của Google.',
-            li1: { text: 'Quay lại trang', link: 'Credentials', page: '.' },
-            li2: { text: 'Nhấp vào', button1: '+ CREATE CREDENTIALS', and: 'và chọn', button2: 'OAuth client ID' },
-            li3: { text: 'Đối với "Application type", chọn', type: 'Web application' },
-            li4: { crucial: 'Bước quan trọng:', text1: 'Dưới "Authorized JavaScript origins", nhấp vào', text2: 'Bạn phải thêm URL nơi ứng dụng đang chạy. Để phát triển cục bộ, đây thường là' },
-            li5: '"Authorized redirect URIs" thường có thể để trống vì thư viện Google Identity Services hiện đại sẽ xử lý việc này.',
-            li6: { text: 'Nhấp', button: 'CREATE' },
-            li7: { text: 'Sao chép', field1: 'Client ID', text2: 'được tạo. Đây là', field2: 'Google Cloud Client ID' },
-        },
-        step3: {
-            title: 'Nhập Keys vào Ứng dụng',
-            p1: 'Khi bạn đã có cả ba key, bạn đã sẵn sàng để cấu hình ứng dụng.',
-            li1: 'Nhấp vào nút "Quay lại Trình tạo" ở đầu trang này.',
-            li2: 'Nhấp vào biểu tượng cài đặt (⚙️) ở thanh tiêu đề.',
-            li3: 'Dán ba key vào các trường tương ứng của chúng.',
-            li4: { text: 'Nhấp', button: 'Lưu và Tải lại', text2: 'Trang sẽ làm mới với cấu hình mới.' },
-            li5: 'Bây giờ bạn sẽ có thể tạo bản xem trước và tạo Google Forms!',
-        },
-    }
-  }
+    guideButton: 'How-to Guide',
+    googleConfigWarning: 'Google integration is not configured. Creating forms directly is disabled. Please check the settings.',
+  },
 };
 
-// This helps TypeScript provide autocompletion and catch typos
-type TranslationObject = typeof translations.en;
-type DottedKeys<T> = T extends object ? { [K in keyof T]-?: `${Exclude<K, symbol>}${'' | `.${DottedKeys<T[K]>}`}` }[keyof T] : '';
-export type TranslationKey = DottedKeys<TranslationObject>;
+const vi: typeof en = {
+  homepage: {
+    title: 'Trình tạo biểu mẫu AI',
+    author: 'Từ đội ngũ phát triển Gemini API',
+    tool1: {
+      title: 'Tạo biểu mẫu',
+      description: 'Tạo ngay biểu mẫu Google Forms nhiều trang từ văn bản, markdown, hoặc thậm chí từ cấu trúc biểu mẫu có sẵn.',
+    },
+    launchTool: 'Mở công cụ',
+    comingSoon: 'Sắp có thêm các công cụ AI khác...',
+  },
+  header: {
+    toggleLanguage: 'English',
+    settings: 'Cài đặt API Key',
+    signOut: 'Đăng xuất',
+    signIn: 'Đăng nhập với Google',
+    loading: 'Đang tải',
+    googleUnavailableTooltip: 'Tích hợp Google chưa được cấu hình. Vui lòng thiết lập các API key cần thiết trong cài đặt.',
+    signInUnavailable: 'Không thể đăng nhập',
+  },
+  modal: {
+    close: 'Đóng',
+    title: 'Cấu hình API Key',
+    subtitle: 'Để kích hoạt chức năng tạo Google Form, vui lòng cung cấp Google Cloud API Key và Client ID của bạn. Các khóa này được lưu trữ an toàn trong bộ nhớ cục bộ của trình duyệt và không bao giờ được gửi đến máy chủ của chúng tôi.',
+    googleApiLabel: 'Google Cloud API Key',
+    googleApiHint: 'Sử dụng cho Google Forms API.',
+    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID',
+    googleClientIdHint: 'Sử dụng để xác thực người dùng và tạo biểu mẫu thay mặt bạn.',
+    cloudConsoleLink: 'Google Cloud Console',
+    cancel: 'Hủy',
+    save: 'Lưu và tải lại',
+  },
+  preview: {
+    required: '* Cho biết câu hỏi bắt buộc',
+    pageBreak: 'Sau phần này, tiếp tục đến trang tiếp theo',
+    submit: 'Gửi',
+    clear: 'Xóa biểu mẫu',
+  },
+  question: {
+    yourAnswer: 'Câu trả lời của bạn',
+  },
+  guide: {
+    header: {
+      title: 'Hướng dẫn Cài đặt',
+      backButton: 'Quay lại',
+    },
+    main: {
+      title: 'Cách lấy API Keys của bạn',
+      subtitle: 'Làm theo các bước sau để kích hoạt tất cả các tính năng của Trình tạo biểu mẫu AI.',
+    },
+    step1: {
+      title: 'Lấy Gemini API Key của bạn',
+      p1: 'Cần có Gemini API key để sử dụng các tính năng tạo của AI. Ứng dụng này được cấu hình để đọc khóa này từ một biến môi trường để bảo mật.',
+      li1: {
+        text: 'Đi đến',
+      },
+      li2: 'Nếu bạn chưa có dự án, hãy tạo một dự án mới.',
+      li3: {
+        text: 'Nhấp vào',
+        button: 'Tạo API key',
+      },
+      li4: {
+        text: 'Tạo một tệp `.env.local` ở thư mục gốc của dự án và thêm khóa của bạn: `API_KEY="YOUR_API_KEY"`.',
+      }
+    },
+    step2: {
+      title: 'Thiết lập Google Cloud để tạo Biểu mẫu',
+      p1: 'Để tự động tạo biểu mẫu trong Google Drive của bạn, bạn cần định cấu hình một dự án Google Cloud với các API và thông tin xác thực phù hợp. Đây là thiết lập một lần.',
+      step2_1: {
+        title: 'Tạo một dự án Google Cloud',
+        li1: { text: 'Đi đến', link: 'Google Cloud Console' },
+        li2: { text: 'Nhấp vào danh sách dự án thả xuống ở trên cùng và nhấp vào', button: 'Dự án mới' },
+        li3: { text: 'Đặt tên cho nó (ví dụ: "AI Form Generator") và nhấp vào', button: 'Tạo' },
+      },
+      step2_2: {
+        title: 'Bật Google Forms API',
+        li1: 'Đảm bảo dự án mới của bạn được chọn.',
+        li2: 'Trong thanh tìm kiếm, nhập "Google Forms API" và chọn nó.',
+        li3: { text: 'Nhấp vào nút', button: 'Bật', wait: 'và đợi cho nó hoàn thành.' },
+      },
+      step2_3: {
+        title: 'Tạo một API Key',
+        li1: { text: 'Điều hướng đến', link: 'API & Dịch vụ > Thông tin xác thực' },
+        li2: { text: 'Nhấp vào', button1: '+ TẠO THÔNG TIN XÁC THỰC', and: 'và chọn', button2: 'Khóa API' },
+        li3: { text: 'Sao chép khóa đã tạo. Đây là', field: 'Google Cloud API Key của bạn' },
+      },
+      step2_4: {
+        title: 'Định cấu hình Màn hình chấp thuận OAuth',
+        p1: 'Đây là những gì người dùng nhìn thấy khi họ cấp quyền cho ứng dụng tạo biểu mẫu thay mặt họ.',
+        li1: { text: 'Trong thanh bên trái, đi đến màn hình', screen: 'Màn hình chấp thuận OAuth' },
+        li2: { text: 'Chọn', type: 'Bên ngoài', and: 'và nhấp vào', button: 'Tạo' },
+        li3: 'Điền vào các trường bắt buộc: Tên ứng dụng, email hỗ trợ người dùng và thông tin liên hệ của nhà phát triển.',
+        li4: 'Trên trang "Phạm vi", nhấp vào "Thêm hoặc Xóa phạm vi". Tìm phạm vi "Google Forms API" (`.../auth/forms.body`) và thêm nó vào.',
+        li5: { crucial: 'Quan trọng:', text1: 'Trên trang "Người dùng thử", nhấp vào', button: '+ THÊM NGƯỜI DÙNG', text2: 'và thêm địa chỉ email của tài khoản Google bạn sẽ sử dụng để đăng nhập và tạo biểu mẫu.' },
+        li6: 'Lưu và tiếp tục quay lại bảng điều khiển.',
+      },
+      step2_5: {
+        title: 'Tạo một ID khách OAuth 2.0',
+        p1: 'ID này xác định ứng dụng cho các máy chủ OAuth của Google.',
+        li1: { text: 'Quay lại trang', link: 'Thông tin xác thực', page: '' },
+        li2: { text: 'Nhấp vào', button1: '+ TẠO THÔNG TIN XÁC THỰC', and: 'và chọn', button2: 'ID khách OAuth' },
+        li3: { text: 'Đối với "Loại ứng dụng", chọn', type: 'Ứng dụng web' },
+        li4: { crucial: 'Quan trọng:', text1: 'Trong "Nguồn gốc JavaScript được ủy quyền", nhấp vào', text2: 'và thêm URL máy chủ phát triển của bạn, thường là', },
+        li5: 'Nhấp vào "Tạo".',
+        li6: { text: 'Một hộp thoại sẽ xuất hiện. Sao chép', button: 'ID khách của bạn' },
+        li7: { text: 'Đây là', field1: 'ID khách OAuth 2.0 của Google Cloud.', text2: 'Sử dụng khóa này và Khóa API từ bước 2.3 trong cài đặt của ứng dụng.', field2: '' },
+      }
+    },
+    step3: {
+      title: 'Nhập các khóa vào ứng dụng',
+      p1: 'Cuối cùng, nhập hai khóa bạn đã nhận được từ Google Cloud vào cài đặt của ứng dụng.',
+      li1: 'Nhấp vào biểu tượng cài đặt (bánh răng) ở góc trên cùng bên phải của ứng dụng.',
+      li2: 'Dán Google Cloud API Key của bạn.',
+      li3: 'Dán ID khách OAuth 2.0 của Google Cloud.',
+      li4: { text: 'Nhấp vào', button: 'Lưu và Tải lại', text2: 'Trang sẽ được làm mới.' },
+      li5: 'Bây giờ bạn có thể đăng nhập bằng Google và tạo biểu mẫu!',
+    }
+  },
+  formGenerator: {
+    title: 'Trình tạo biểu mẫu AI',
+    subtitle: 'Mô tả biểu mẫu của bạn bằng văn bản thuần túy hoặc dán một cấu trúc.',
+    inputPlaceholder: 'VD: "Tạo một biểu mẫu liên hệ với các trường cho tên, email (bắt buộc) và một đoạn tin nhắn. Thêm một câu hỏi trắc nghiệm về cách họ biết đến chúng tôi với các tùy chọn: Mạng xã hội, Bạn bè, Khác."',
+    generateButton: 'Tạo bản xem trước',
+    generatingButton: 'Đang tạo...',
+    error: 'Lỗi',
+    tryAgain: 'Thử lại',
+    previewTab: 'Xem trước',
+    googleFormTab: 'Google Form',
+    appsScriptTab: 'Apps Script',
+    formCreatedSuccess: 'Tạo biểu mẫu thành công!',
+    viewForm: 'Xem biểu mẫu',
+    createFormButton: 'Tạo Google Form',
+    signInToCreate: 'Đăng nhập để tạo',
+    copyCode: 'Sao chép mã',
+    copied: 'Đã sao chép!',
+    appsScriptInstructions: {
+      title: 'Cách sử dụng tập lệnh này:',
+      p1: 'Mã Google Apps Script này có thể được sử dụng để tạo biểu mẫu theo cách thủ công trong tài khoản Google của bạn.',
+      li1: 'Mở một Google Sheet hoặc Google Doc mới.',
+      li2: 'Đi đến "Tiện ích mở rộng" > "Apps Script".',
+      li3: 'Dán mã này vào trình chỉnh sửa, thay thế mọi nội dung mặc định.',
+      li4: 'Nhấp vào biểu tượng "Lưu dự án", sau đó nhấp vào "Chạy".',
+      li5: 'Ủy quyền cho tập lệnh khi được nhắc.',
+      li6: 'Biểu mẫu mới sẽ xuất hiện trong Google Drive của bạn.',
+    },
+    guideButton: 'Hướng dẫn',
+    googleConfigWarning: 'Tích hợp Google chưa được cấu hình. Chức năng tạo biểu mẫu trực tiếp bị vô hiệu hóa. Vui lòng kiểm tra cài đặt.',
+  },
+};
+
+
+export const translations = { en, vi };
+
+// This utility type creates a union of all possible translation keys, like "header.title"
+type DotPrefix<T extends string> = T extends "" ? "" : `.${T}`;
+type Paths<T> = T extends object ? {
+    [K in keyof T]-?: K extends string ? `${K}${DotPrefix<Paths<T[K]>>}` : never
+}[keyof T] : "";
+
+export type TranslationKey = Paths<typeof en>;

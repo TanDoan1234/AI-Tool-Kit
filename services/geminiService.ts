@@ -1,6 +1,7 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import type { FormDefinition } from '../types';
-import { getApiKeys, isGeminiConfigured } from './configService';
+// FIX: Per guidelines, getApiKeys is no longer needed for the Gemini key.
+import { isGeminiConfigured } from './configService';
 
 
 const formSchema = {
@@ -71,10 +72,11 @@ const formSchema = {
 
 export async function generateFormDefinition(rawInput: string, language: 'en' | 'vi'): Promise<FormDefinition> {
   if (!isGeminiConfigured()) {
-    throw new Error("Gemini API key is not configured. Please set it in the settings.");
+    // FIX: Updated error message to reflect API key sourcing from environment variables per guidelines.
+    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
   }
-  const { geminiApiKey } = getApiKeys();
-  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
+  // FIX: Per coding guidelines, initialize GoogleGenAI with API key directly from process.env.API_KEY.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const systemInstruction = language === 'vi' 
   ? `Bạn là một chuyên gia tạo biểu mẫu. Hãy phân tích nội dung sau và chuyển nó thành một đối tượng JSON có cấu trúc đại diện cho một Google Form.
