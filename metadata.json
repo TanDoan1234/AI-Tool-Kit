@@ -1,0 +1,5 @@
+{
+  "name": "AI Form Generator",
+  "description": "An intelligent web application that automatically generates a Google Form preview from questions provided in JSON, HTML, or Markdown format, with support for embedded images.",
+  "requestFramePermissions": []
+}
