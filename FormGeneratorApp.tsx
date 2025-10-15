@@ -16,11 +16,71 @@ interface FormGeneratorAppProps {
   onSignIn: () => void;
 }
 
-const examplePrompts = [
-    'A simple contact form with name, email, and message fields.',
-    'A customer feedback survey with a 5-star rating scale, a paragraph for comments, and a multiple-choice question about the product they used.',
-    'An event registration form for a tech conference. It should have sections for Personal Details (name, email, company) and Session Preferences (checkboxes for different talks).',
-];
+const MARKDOWN_EXAMPLE = `# Event Registration
+Sign up for our annual tech conference!
+
+## Personal Information
+* Full Name (Short Answer, required)
+* Email Address (Short Answer, required)
+
+## T-Shirt Size
+What's your t-shirt size? (Multiple Choice)
+- Small
+- Medium
+- Large
+- X-Large
+
+![T-shirt graphic](https://via.placeholder.com/400x200.png/94a3e9/ffffff?text=Cool+T-Shirt)
+
+## Dietary Restrictions
+Please list any dietary restrictions. (Paragraph)
+`;
+
+const JSON_EXAMPLE = `{
+  "requests": [
+    {
+      "createItem": {
+        "item": {
+          "title": "Your Name",
+          "questionItem": { "question": { "required": true, "textQuestion": {} } }
+        }
+      }
+    },
+    {
+      "createItem": {
+        "item": {
+          "title": "Your primary development area?",
+          "questionItem": {
+            "question": {
+              "choiceQuestion": {
+                "type": "RADIO",
+                "options": [{ "value": "Frontend" }, { "value": "Backend" }, { "value": "Mobile" }, { "value": "DevOps" }]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}`;
+
+const HTML_EXAMPLE = `<form>
+  <h1>Website Feedback</h1>
+  <p>Help us improve by answering a few questions.</p>
+  
+  <label for="email">Your Email:</label>
+  <input type="email" id="email" name="email" required>
+  
+  <p>Which features do you use? (Check all that apply)</p>
+  <input type="checkbox" id="feature1" value="Dashboard">
+  <label for="feature1">Dashboard</label><br>
+  <input type="checkbox" id="feature2" value="Analytics">
+  <label for="feature2">Analytics</label><br>
+  
+  <label for="comments">Any other suggestions?</label>
+  <textarea id="comments" rows="5"></textarea>
+</form>
+`;
 
 type ActiveTab = 'preview' | 'google-form' | 'apps-script';
 
@@ -99,10 +159,6 @@ export default function FormGeneratorApp({
     setTimeout(() => setIsCopied(false), 2000);
   };
   
-  const handleUseExample = (prompt: string) => {
-    setUserInput(prompt);
-  }
-
   if (view === 'guide') {
     return <GuidePage onBack={() => setView('editor')} />;
   }
@@ -129,13 +185,17 @@ export default function FormGeneratorApp({
               rows={15}
             />
              <div className="mt-4">
-                <p className="text-sm text-gray-400 mb-2">Or try an example:</p>
+                <p className="text-sm text-gray-400 mb-2">{t('formGenerator.tryExample.title')}</p>
                 <div className="flex flex-wrap gap-2">
-                    {examplePrompts.map((prompt, i) => (
-                        <button key={i} onClick={() => handleUseExample(prompt)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
-                            Example {i+1}
-                        </button>
-                    ))}
+                    <button onClick={() => setUserInput(MARKDOWN_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                        {t('formGenerator.tryExample.markdown')}
+                    </button>
+                    <button onClick={() => setUserInput(JSON_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                        {t('formGenerator.tryExample.json')}
+                    </button>
+                    <button onClick={() => setUserInput(HTML_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                        {t('formGenerator.tryExample.html')}
+                    </button>
                 </div>
             </div>
             <button

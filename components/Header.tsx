@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { GoogleIcon, SettingsIcon } from './icons';
+import { GoogleIcon, SettingsIcon, ArrowLeftIcon } from './icons';
 
 interface HeaderProps {
     onNavigateHome: () => void;
@@ -11,6 +11,7 @@ interface HeaderProps {
     onSignIn: () => void;
     onSignOut: () => void;
     showLanguageToggle?: boolean;
+    showHomeButton?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({ 
@@ -22,6 +23,7 @@ const Header: React.FC<HeaderProps> = ({
     onSignIn,
     onSignOut,
     showLanguageToggle,
+    showHomeButton
 }) => {
     const { language, setLanguage, t } = useLanguage();
     
@@ -33,12 +35,24 @@ const Header: React.FC<HeaderProps> = ({
     return (
        <header className="bg-gray-800 shadow-lg border-b border-gray-700 sticky top-0 z-20">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 
-            onClick={onNavigateHome} 
-            className="text-xl sm:text-2xl font-bold text-violet-400 cursor-pointer hover:text-violet-300 transition-colors"
-          >
-            {t('homepage.title')}
-          </h1>
+          <div className="flex items-center gap-3 sm:gap-4">
+            {showHomeButton && (
+                <button
+                    onClick={onNavigateHome}
+                    className="p-2 rounded-full text-gray-400 hover:bg-gray-700 hover:text-white transition-colors"
+                    title={t('header.backToHome')}
+                    aria-label={t('header.backToHome')}
+                >
+                    <ArrowLeftIcon className="w-6 h-6" />
+                </button>
+            )}
+            <h1 
+              onClick={onNavigateHome} 
+              className="text-xl sm:text-2xl font-bold text-violet-400 cursor-pointer hover:text-violet-300 transition-colors"
+            >
+              {t('homepage.title')}
+            </h1>
+          </div>
           <div className="flex items-center gap-2 sm:gap-4">
             {showLanguageToggle && (
                 <button

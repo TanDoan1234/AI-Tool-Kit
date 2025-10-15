@@ -20,6 +20,7 @@ const en = {
     loading: 'Loading',
     googleUnavailableTooltip: 'Google Integration is not configured. Please set the required API keys in settings.',
     signInUnavailable: 'Sign In Unavailable',
+    backToHome: 'Back to Home',
   },
   modal: {
     close: 'Close',
@@ -127,6 +128,12 @@ const en = {
     generatingButton: 'Generating...',
     error: 'Error',
     tryAgain: 'Try Again',
+    tryExample: {
+      title: 'Or try an example:',
+      markdown: 'Markdown',
+      json: 'JSON',
+      html: 'HTML',
+    },
     previewTab: 'Preview',
     googleFormTab: 'Google Form',
     appsScriptTab: 'Apps Script',
@@ -170,6 +177,7 @@ const vi: typeof en = {
     loading: 'Đang tải',
     googleUnavailableTooltip: 'Tích hợp Google chưa được cấu hình. Vui lòng thiết lập các API key cần thiết trong cài đặt.',
     signInUnavailable: 'Không thể đăng nhập',
+    backToHome: 'Quay về Trang chủ',
   },
   modal: {
     close: 'Đóng',
@@ -277,6 +285,12 @@ const vi: typeof en = {
     generatingButton: 'Đang tạo...',
     error: 'Lỗi',
     tryAgain: 'Thử lại',
+    tryExample: {
+      title: 'Hoặc thử một ví dụ:',
+      markdown: 'Markdown',
+      json: 'JSON',
+      html: 'HTML',
+    },
     previewTab: 'Xem trước',
     googleFormTab: 'Google Form',
     appsScriptTab: 'Apps Script',

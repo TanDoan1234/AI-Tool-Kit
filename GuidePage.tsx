@@ -55,61 +55,63 @@ const GuidePage: React.FC<GuidePageProps> = ({ onBack }) => {
               </li>
               <li>{t('guide.step1.li2')}</li>
               <li>{t('guide.step1.li3.text')} <strong className="text-white">"{t('guide.step1.li3.button')}"</strong>.</li>
-              <li>{t('guide.step1.li4.text')} <strong className="text-white">"{t('guide.step1.li4.field')}"</strong> {t('guide.step1.li4.location')}</li>
+              {/* FIX: Updated instructions for setting Gemini key to align with guidelines and fix missing translation keys. */}
+              <li>{t('guide.step1.li4.text')}</li>
             </ol>
           </GuideCard>
 
           <GuideCard title={t('guide.step2.title')} step={2}>
             <p>{t('guide.step2.p1')}</p>
 
-            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700">{t('guide.step2_1.title')}</h3>
+            {/* FIX: Corrected all translation keys in this section by prepending 'guide.step2.' to match the structure in translations.ts. */}
+            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700">{t('guide.step2.step2_1.title')}</h3>
             <ol className="list-decimal list-inside space-y-2 pl-4">
               <li>
-                {t('guide.step2_1.li1.text')} <GuideLink href="https://console.cloud.google.com/">{t('guide.step2_1.li1.link')}</GuideLink>.
+                {t('guide.step2.step2_1.li1.text')} <GuideLink href="https://console.cloud.google.com/">{t('guide.step2.step2_1.li1.link')}</GuideLink>.
               </li>
-              <li>{t('guide.step2_1.li2.text')} <strong className="text-white">"{t('guide.step2_1.li2.button')}"</strong>.</li>
-              <li>{t('guide.step2_1.li3.text')} <strong className="text-white">"{t('guide.step2_1.li3.button')}"</strong>.</li>
+              <li>{t('guide.step2.step2_1.li2.text')} <strong className="text-white">"{t('guide.step2.step2_1.li2.button')}"</strong>.</li>
+              <li>{t('guide.step2.step2_1.li3.text')} <strong className="text-white">"{t('guide.step2.step2_1.li3.button')}"</strong>.</li>
             </ol>
             
-            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2_2.title')}</h3>
+            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2.step2_2.title')}</h3>
             <ol className="list-decimal list-inside space-y-2 pl-4">
-                <li>{t('guide.step2_2.li1')}</li>
-                <li>{t('guide.step2_2.li2')}</li>
-                <li>{t('guide.step2_2.li3.text')} <strong className="text-white">"{t('guide.step2_2.li3.button')}"</strong> {t('guide.step2_2.li3.wait')}</li>
+                <li>{t('guide.step2.step2_2.li1')}</li>
+                <li>{t('guide.step2.step2_2.li2')}</li>
+                <li>{t('guide.step2.step2_2.li3.text')} <strong className="text-white">"{t('guide.step2.step2_2.li3.button')}"</strong> {t('guide.step2.step2_2.li3.wait')}</li>
             </ol>
 
-            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2_3.title')}</h3>
+            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2.step2_3.title')}</h3>
              <ol className="list-decimal list-inside space-y-2 pl-4">
-                <li>{t('guide.step2_3.li1.text')} <GuideLink href="https://console.cloud.google.com/apis/credentials">{t('guide.step2_3.li1.link')}</GuideLink>.</li>
-                <li>{t('guide.step2_3.li2.text')} <strong className="text-white">"{t('guide.step2_3.li2.button1')}"</strong> {t('guide.step2_3.li2.and')} <strong className="text-white">"{t('guide.step2_3.li2.button2')}"</strong>.</li>
-                <li>{t('guide.step2_3.li3.text')} <strong className="text-white">{t('guide.step2_3.li3.field')}</strong>.</li>
+                <li>{t('guide.step2.step2_3.li1.text')} <GuideLink href="https://console.cloud.google.com/apis/credentials">{t('guide.step2.step2_3.li1.link')}</GuideLink>.</li>
+                <li>{t('guide.step2.step2_3.li2.text')} <strong className="text-white">"{t('guide.step2.step2_3.li2.button1')}"</strong> {t('guide.step2.step2_3.li2.and')} <strong className="text-white">"{t('guide.step2.step2_3.li2.button2')}"</strong>.</li>
+                <li>{t('guide.step2.step2_3.li3.text')} <strong className="text-white">{t('guide.step2.step2_3.li3.field')}</strong>.</li>
              </ol>
 
-            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2_4.title')}</h3>
-             <p>{t('guide.step2_4.p1')}</p>
+            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2.step2_4.title')}</h3>
+             <p>{t('guide.step2.step2_4.p1')}</p>
              <ol className="list-decimal list-inside space-y-2 pl-4">
-                <li>{t('guide.step2_4.li1.text')} <strong className="text-white">"{t('guide.step2_4.li1.screen')}"</strong>.</li>
-                <li>{t('guide.step2_4.li2.text')} <strong className="text-white">"{t('guide.step2_4.li2.type')}"</strong> {t('guide.step2_4.li2.and')} <strong className="text-white">"{t('guide.step2_4.li2.button')}"</strong>.</li>
-                <li>{t('guide.step2_4.li3')}</li>
-                <li>{t('guide.step2_4.li4')}</li>
+                <li>{t('guide.step2.step2_4.li1.text')} <strong className="text-white">"{t('guide.step2.step2_4.li1.screen')}"</strong>.</li>
+                <li>{t('guide.step2.step2_4.li2.text')} <strong className="text-white">"{t('guide.step2.step2_4.li2.type')}"</strong> {t('guide.step2.step2_4.li2.and')} <strong className="text-white">"{t('guide.step2.step2_4.li2.button')}"</strong>.</li>
+                <li>{t('guide.step2.step2_4.li3')}</li>
+                <li>{t('guide.step2.step2_4.li4')}</li>
                 <li className="p-3 bg-yellow-900/30 border-l-4 border-yellow-500 rounded-md">
-                    <strong className="text-yellow-400">{t('guide.step2_4.li5.crucial')}</strong> {t('guide.step2_4.li5.text1')} <strong className="text-white">"{t('guide.step2_4.li5.button')}"</strong>. {t('guide.step2_4.li5.text2')}
+                    <strong className="text-yellow-400">{t('guide.step2.step2_4.li5.crucial')}</strong> {t('guide.step2.step2_4.li5.text1')} <strong className="text-white">"{t('guide.step2.step2_4.li5.button')}"</strong>. {t('guide.step2.step2_4.li5.text2')}
                 </li>
-                 <li>{t('guide.step2_4.li6')}</li>
+                 <li>{t('guide.step2.step2_4.li6')}</li>
             </ol>
 
-            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2_5.title')}</h3>
-            <p>{t('guide.step2_5.p1')}</p>
+            <h3 className="text-xl font-semibold text-white pt-4 border-t border-gray-700 mt-6">{t('guide.step2.step2_5.title')}</h3>
+            <p>{t('guide.step2.step2_5.p1')}</p>
             <ol className="list-decimal list-inside space-y-2 pl-4">
-                <li>{t('guide.step2_5.li1.text')} <GuideLink href="https://console.cloud.google.com/apis/credentials">{t('guide.step2_5.li1.link')}</GuideLink> {t('guide.step2_5.li1.page')}</li>
-                <li>{t('guide.step2_5.li2.text')} <strong className="text-white">"{t('guide.step2_5.li2.button1')}"</strong> {t('guide.step2_5.li2.and')} <strong className="text-white">"{t('guide.step2_5.li2.button2')}"</strong>.</li>
-                <li>{t('guide.step2_5.li3.text')} <strong className="text-white">"{t('guide.step2_5.li3.type')}"</strong>.</li>
+                <li>{t('guide.step2.step2_5.li1.text')} <GuideLink href="https://console.cloud.google.com/apis/credentials">{t('guide.step2.step2_5.li1.link')}</GuideLink> {t('guide.step2.step2_5.li1.page')}</li>
+                <li>{t('guide.step2.step2_5.li2.text')} <strong className="text-white">"{t('guide.step2.step2_5.li2.button1')}"</strong> {t('guide.step2.step2_5.li2.and')} <strong className="text-white">"{t('guide.step2.step2_5.li2.button2')}"</strong>.</li>
+                <li>{t('guide.step2.step2_5.li3.text')} <strong className="text-white">"{t('guide.step2.step2_5.li3.type')}"</strong>.</li>
                 <li className="p-3 bg-yellow-900/30 border-l-4 border-yellow-500 rounded-md">
-                    <strong className="text-yellow-400">{t('guide.step2_5.li4.crucial')}</strong> {t('guide.step2_5.li4.text1')} <strong className="text-white">"+ ADD URI"</strong>. {t('guide.step2_5.li4.text2')} <code className="bg-gray-700 px-1 rounded">http://localhost:3000</code>.
+                    <strong className="text-yellow-400">{t('guide.step2.step2_5.li4.crucial')}</strong> {t('guide.step2.step2_5.li4.text1')} <strong className="text-white">"+ ADD URI"</strong>. {t('guide.step2.step2_5.li4.text2')} <code className="bg-gray-700 px-1 rounded">http://localhost:3000</code>.
                 </li>
-                <li>{t('guide.step2_5.li5')}</li>
-                <li>{t('guide.step2_5.li6.text')} <strong className="text-white">"{t('guide.step2_5.li6.button')}"</strong>.</li>
-                <li>{t('guide.step2_5.li7.text')} <strong className="text-white">{t('guide.step2_5.li7.field1')}</strong>. {t('guide.step2_5.li7.text2')} <strong className="text-white">{t('guide.step2_5.li7.field2')}</strong>.</li>
+                <li>{t('guide.step2.step2_5.li5')}</li>
+                <li>{t('guide.step2.step2_5.li6.text')} <strong className="text-white">"{t('guide.step2.step2_5.li6.button')}"</strong>.</li>
+                <li>{t('guide.step2.step2_5.li7.text')} <strong className="text-white">{t('guide.step2.step2_5.li7.field1')}</strong>. {t('guide.step2.step2_5.li7.text2')} <strong className="text-white">{t('guide.step2.step2_5.li7.field2')}</strong>.</li>
             </ol>
           </GuideCard>
            <GuideCard title={t('guide.step3.title')} step={3}>

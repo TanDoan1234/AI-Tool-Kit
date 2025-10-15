@@ -92,6 +92,7 @@ export default function App() {
           onSignIn={signIn}
           onSignOut={signOut}
           showLanguageToggle={currentView === 'home'}
+          showHomeButton={currentView !== 'home'}
         />
         
         <main className="flex-grow">
