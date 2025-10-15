@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import HomePage from './components/HomePage';
 // FIX: Corrected import to resolve module error.
 import FormGeneratorApp from './FormGeneratorApp';
+import DiagramGeneratorApp from './DiagramGeneratorApp';
 import ApiKeyModal from './components/ApiKeyModal';
 import Header from './components/Header';
 import { getApiKeys, saveApiKeys, isGoogleConfigured as checkGoogleConfig, ApiKeys } from './services/configService';
 import { initGoogleClient, signIn, signOut } from './services/googleFormService';
 import { useLanguage } from './i18n/LanguageContext';
 
-type View = 'home' | 'formGenerator';
+type View = 'home' | 'formGenerator' | 'diagramGenerator';
 
 // A simple loading spinner component for the language change overlay
 const LoadingSpinner: React.FC = () => (
@@ -60,15 +61,19 @@ export default function App() {
     switch (currentView) {
       case 'formGenerator':
         return <FormGeneratorApp 
-                  onNavigateHome={() => navigateTo('home')}
                   isGoogleReady={isGoogleReady} 
                   isSignedIn={isSignedIn} 
                   isGoogleConfigAvailable={isGoogleConfigAvailable} 
                   onSignIn={signIn}
                 />;
+      case 'diagramGenerator':
+        return <DiagramGeneratorApp />;
       case 'home':
       default:
-        return <HomePage onNavigateToTool={() => navigateTo('formGenerator')} />;
+        return <HomePage 
+                  onNavigateToFormTool={() => navigateTo('formGenerator')} 
+                  onNavigateToDiagramTool={() => navigateTo('diagramGenerator')}
+               />;
     }
   };
 
@@ -91,7 +96,7 @@ export default function App() {
           isGoogleConfigAvailable={isGoogleConfigAvailable}
           onSignIn={signIn}
           onSignOut={signOut}
-          showLanguageToggle={currentView === 'home'}
+          showLanguageToggle={true}
           showHomeButton={currentView !== 'home'}
         />
         

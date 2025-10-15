@@ -9,7 +9,6 @@ import { useLanguage } from './i18n/LanguageContext';
 import { CodeIcon, GoogleIcon } from './components/icons';
 
 interface FormGeneratorAppProps {
-  onNavigateHome: () => void;
   isGoogleReady: boolean;
   isSignedIn: boolean;
   isGoogleConfigAvailable: boolean;

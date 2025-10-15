@@ -1,12 +1,13 @@
 import React from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon } from './icons';
 
 interface HomePageProps {
-  onNavigateToTool: () => void;
+  onNavigateToFormTool: () => void;
+  onNavigateToDiagramTool: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigateToTool }) => {
+const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool }) => {
   const { t } = useLanguage();
 
   return (
@@ -18,9 +19,9 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToTool }) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up animation-delay-200">
-            {/* Tool Card */}
+            {/* Form Tool Card */}
             <div 
-                onClick={onNavigateToTool}
+                onClick={onNavigateToFormTool}
                 className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
             >
                 <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
@@ -28,6 +29,21 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToTool }) => {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool1.title')}</h3>
                 <p className="text-gray-400 flex-grow">{t('homepage.tool1.description')}</p>
+                <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
+                    {t('homepage.launchTool')} &rarr;
+                </span>
+            </div>
+
+            {/* Diagram Tool Card */}
+            <div 
+                onClick={onNavigateToDiagramTool}
+                className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
+            >
+                <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
+                    <ChartBarIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool2.title')}</h3>
+                <p className="text-gray-400 flex-grow">{t('homepage.tool2.description')}</p>
                 <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
                     {t('homepage.launchTool')} &rarr;
                 </span>

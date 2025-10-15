@@ -3,11 +3,15 @@
 
 const en = {
   homepage: {
-    title: 'AI Form Generator',
+    title: 'Useful Toolkit',
     author: 'From the team behind the Gemini API',
     tool1: {
       title: 'Form Generator',
       description: 'Instantly create multi-page Google Forms from text, markdown, or even existing form structures.',
+    },
+    tool2: {
+      title: 'Diagram Generator',
+      description: 'Generate beautiful and accurate diagrams (flowcharts, sequence, etc.) from natural language descriptions.',
     },
     launchTool: 'Launch Tool',
     comingSoon: 'More AI tools coming soon...',
@@ -156,15 +160,38 @@ const en = {
     guideButton: 'How-to Guide',
     googleConfigWarning: 'Google integration is not configured. Creating forms directly is disabled. Please check the settings.',
   },
+  diagramGenerator: {
+    title: 'AI Diagram Generator',
+    subtitle: 'Describe a process or system, and watch it turn into a diagram.',
+    inputPlaceholder: 'e.g., "A user logs in. If successful, they are redirected to the dashboard. If it fails, show an error message. From the dashboard, they can access their profile or log out."',
+    generateButton: 'Generate Diagram',
+    generatingButton: 'Generating...',
+    error: 'Error',
+    tryAgain: 'Try Again',
+    tryExample: {
+      title: 'Or try an example:',
+      flowchart: 'Login Flow',
+      sequence: 'API Sequence',
+      class: 'Class Diagram',
+    },
+    diagramTab: 'Diagram',
+    codeTab: 'Code',
+    copyCode: 'Copy Code',
+    copied: 'Copied!',
+  }
 };
 
 const vi: typeof en = {
   homepage: {
-    title: 'Trình tạo biểu mẫu AI',
+    title: 'Bộ Công cụ Hữu ích',
     author: 'Từ đội ngũ phát triển Gemini API',
     tool1: {
       title: 'Tạo biểu mẫu',
       description: 'Tạo ngay biểu mẫu Google Forms nhiều trang từ văn bản, markdown, hoặc thậm chí từ cấu trúc biểu mẫu có sẵn.',
+    },
+    tool2: {
+        title: 'Tạo sơ đồ',
+        description: 'Tạo các sơ đồ đẹp và chính xác (lưu đồ, chuỗi, v.v.) từ mô tả bằng ngôn ngữ tự nhiên.',
     },
     launchTool: 'Mở công cụ',
     comingSoon: 'Sắp có thêm các công cụ AI khác...',
@@ -313,6 +340,25 @@ const vi: typeof en = {
     guideButton: 'Hướng dẫn',
     googleConfigWarning: 'Tích hợp Google chưa được cấu hình. Chức năng tạo biểu mẫu trực tiếp bị vô hiệu hóa. Vui lòng kiểm tra cài đặt.',
   },
+  diagramGenerator: {
+    title: 'Trình tạo sơ đồ AI',
+    subtitle: 'Mô tả một quy trình hoặc hệ thống và xem nó biến thành một sơ đồ.',
+    inputPlaceholder: 'VD: "Người dùng đăng nhập. Nếu thành công, họ được chuyển hướng đến trang tổng quan. Nếu thất bại, hiển thị thông báo lỗi. Từ trang tổng quan, họ có thể truy cập hồ sơ của mình hoặc đăng xuất."',
+    generateButton: 'Tạo sơ đồ',
+    generatingButton: 'Đang tạo...',
+    error: 'Lỗi',
+    tryAgain: 'Thử lại',
+    tryExample: {
+      title: 'Hoặc thử một ví dụ:',
+      flowchart: 'Luồng đăng nhập',
+      sequence: 'Chuỗi API',
+      class: 'Sơ đồ lớp',
+    },
+    diagramTab: 'Sơ đồ',
+    codeTab: 'Mã',
+    copyCode: 'Sao chép mã',
+    copied: 'Đã sao chép!',
+  }
 };
 
 
