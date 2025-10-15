@@ -13,8 +13,13 @@ const en = {
       title: 'Diagram Generator',
       description: 'Generate beautiful and accurate diagrams (flowcharts, sequence, etc.) from natural language descriptions.',
     },
+    tool3: {
+      title: 'Docstring Generator',
+      description: 'Automatically generate comprehensive docstrings for your code snippets in various programming languages.',
+    },
     launchTool: 'Launch Tool',
     comingSoon: 'More AI tools coming soon...',
+    donationPrompt: 'If you find this useful, consider buying me a coffee! ^^',
   },
   header: {
     toggleLanguage: 'Tiếng Việt',
@@ -178,6 +183,23 @@ const en = {
     codeTab: 'Code',
     copyCode: 'Copy Code',
     copied: 'Copied!',
+  },
+  docstringGenerator: {
+    title: 'AI Docstring Generator',
+    subtitle: 'Paste a function or class, and the AI will write the documentation for it.',
+    inputPlaceholder: 'Paste your code here (e.g., a Python function, a JavaScript class)...',
+    generateButton: 'Generate Docstring',
+    generatingButton: 'Generating...',
+    error: 'Error',
+    tryAgain: 'Try Again',
+    tryExample: {
+      title: 'Or try an example:',
+      python: 'Python Function',
+      javascript: 'JavaScript Function',
+    },
+    outputTitle: 'Code with Docstring',
+    copyCode: 'Copy Code',
+    copied: 'Copied!',
   }
 };
 
@@ -193,8 +215,13 @@ const vi: typeof en = {
         title: 'Tạo sơ đồ',
         description: 'Tạo các sơ đồ đẹp và chính xác (lưu đồ, chuỗi, v.v.) từ mô tả bằng ngôn ngữ tự nhiên.',
     },
+    tool3: {
+      title: 'Tạo Docstring',
+      description: 'Tự động tạo các docstring chi tiết cho các đoạn mã của bạn bằng nhiều ngôn ngữ lập trình khác nhau.',
+    },
     launchTool: 'Mở công cụ',
     comingSoon: 'Sắp có thêm các công cụ AI khác...',
+    donationPrompt: 'Nếu bạn thấy hay hãy ủng hộ mình 1 ly cf nhé ^^',
   },
   header: {
     toggleLanguage: 'English',
@@ -356,6 +383,23 @@ const vi: typeof en = {
     },
     diagramTab: 'Sơ đồ',
     codeTab: 'Mã',
+    copyCode: 'Sao chép mã',
+    copied: 'Đã sao chép!',
+  },
+  docstringGenerator: {
+    title: 'Trình tạo Docstring AI',
+    subtitle: 'Dán một hàm hoặc lớp, và AI sẽ viết tài liệu cho nó.',
+    inputPlaceholder: 'Dán mã của bạn vào đây (ví dụ: một hàm Python, một lớp JavaScript)...',
+    generateButton: 'Tạo Docstring',
+    generatingButton: 'Đang tạo...',
+    error: 'Lỗi',
+    tryAgain: 'Thử lại',
+    tryExample: {
+      title: 'Hoặc thử một ví dụ:',
+      python: 'Hàm Python',
+      javascript: 'Hàm JavaScript',
+    },
+    outputTitle: 'Mã nguồn với Docstring',
     copyCode: 'Sao chép mã',
     copied: 'Đã sao chép!',
   }

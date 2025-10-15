@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon } from './icons';
 
 interface HomePageProps {
   onNavigateToFormTool: () => void;
   onNavigateToDiagramTool: () => void;
+  onNavigateToDocstringTool: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool }) => {
+const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool, onNavigateToDocstringTool }) => {
   const { t } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const qrCodeUrl = "https://i.ibb.co/VYnm5RB3/qr-code.jpg";
@@ -52,11 +53,19 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
                   </span>
               </div>
               
-              {/* Placeholder for future tools */}
+              {/* Docstring Tool Card */}
               <div 
-                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center justify-center text-center border-2 border-dashed border-gray-700"
+                  onClick={onNavigateToDocstringTool}
+                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
               >
-                  <p className="text-gray-500">{t('homepage.comingSoon')}</p>
+                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
+                      <CodeIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool3.title')}</h3>
+                  <p className="text-gray-400 flex-grow">{t('homepage.tool3.description')}</p>
+                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
+                      {t('homepage.launchTool')} &rarr;
+                  </span>
               </div>
           </div>
 
@@ -72,7 +81,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
                       <GmailIcon className="w-8 h-8" />
                   </a>
               </div>
-              <p className="text-gray-300 mb-4">Nếu bạn thấy hay hãy ủng hộ mình 1 ly cf nhé ^^</p>
+              <p className="text-gray-300 mb-4">{t('homepage.donationPrompt')}</p>
               <div 
                 className="inline-block p-2 bg-white rounded-xl shadow-md transform hover:-translate-y-2 hover:scale-105 transition-all duration-300 cursor-pointer"
                 onClick={() => setIsQrModalOpen(true)}
