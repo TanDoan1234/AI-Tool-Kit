@@ -7,7 +7,8 @@ export const translations = {
       signIn: 'Sign in with Google',
       loading: 'Loading',
       googleUnavailableTooltip: 'Google integration not configured',
-      signInUnavailable: 'Sign in Unavailable'
+      signInUnavailable: 'Sign in Unavailable',
+      toggleLanguage: 'Tiếng Việt'
     },
     homepage: {
       title: 'Useful Utilities for Everyone',
@@ -162,7 +163,8 @@ export const translations = {
       signIn: 'Đăng nhập với Google',
       loading: 'Đang tải',
       googleUnavailableTooltip: 'Chưa cấu hình tích hợp Google',
-      signInUnavailable: 'Không thể đăng nhập'
+      signInUnavailable: 'Không thể đăng nhập',
+      toggleLanguage: 'English'
     },
     homepage: {
       title: 'Các tiện ích hữu ích cho mọi người',

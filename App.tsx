@@ -5,8 +5,18 @@ import ApiKeyModal from './components/ApiKeyModal';
 import Header from './components/Header';
 import { getApiKeys, saveApiKeys, isGoogleConfigured as checkGoogleConfig, ApiKeys } from './services/configService';
 import { initGoogleClient, signIn, signOut } from './services/googleFormService';
+import { useLanguage } from './i18n/LanguageContext';
 
 type View = 'home' | 'formGenerator';
+
+// A simple loading spinner component for the language change overlay
+const LoadingSpinner: React.FC = () => (
+  <svg className="animate-spin h-10 w-10 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
+
 
 export default function App() {
   const [currentView, setCurrentView] = useState<View>('home');
@@ -17,6 +27,8 @@ export default function App() {
   const [isGoogleConfigAvailable, setIsGoogleConfigAvailable] = useState(false);
   const [isGoogleReady, setIsGoogleReady] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+
+  const { isLoading: isLanguageLoading, t } = useLanguage(); // Get loading state from context
 
   useEffect(() => {
     const googleConf = checkGoogleConfig();
@@ -61,21 +73,32 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-200 flex flex-col">
-      <Header 
-        onNavigateHome={() => navigateTo('home')}
-        onOpenSettings={() => setIsApiModalOpen(true)}
-        isGoogleReady={isGoogleReady}
-        isSignedIn={isSignedIn}
-        isGoogleConfigAvailable={isGoogleConfigAvailable}
-        onSignIn={signIn}
-        onSignOut={signOut}
-        showLanguageToggle={currentView === 'home'}
-      />
+       {isLanguageLoading && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-80 flex flex-col items-center justify-center z-[100]" aria-live="polite" aria-busy="true">
+          <LoadingSpinner />
+          <p className="mt-4 text-white">{t('header.loading')}...</p>
+        </div>
+      )}
       
-      <main className="flex-grow">
-        {renderContent()}
-      </main>
+      {/* This wrapper handles the fade transition for the main content */}
+      <div className={`flex flex-col flex-grow transition-opacity duration-300 ease-in-out ${isLanguageLoading ? 'opacity-0' : 'opacity-100'}`}>
+        <Header 
+          onNavigateHome={() => navigateTo('home')}
+          onOpenSettings={() => setIsApiModalOpen(true)}
+          isGoogleReady={isGoogleReady}
+          isSignedIn={isSignedIn}
+          isGoogleConfigAvailable={isGoogleConfigAvailable}
+          onSignIn={signIn}
+          onSignOut={signOut}
+          showLanguageToggle={currentView === 'home'}
+        />
+        
+        <main className="flex-grow">
+          {renderContent()}
+        </main>
+      </div>
 
+      {/* API Key modal is kept outside the transitioning wrapper */}
       <ApiKeyModal
         isOpen={isApiModalOpen}
         initialKeys={apiKeys}
