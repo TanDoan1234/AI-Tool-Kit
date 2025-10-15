@@ -4,13 +4,14 @@ import HomePage from './components/HomePage';
 import FormGeneratorApp from './FormGeneratorApp';
 import DiagramGeneratorApp from './DiagramGeneratorApp';
 import DocstringGeneratorApp from './DocstringGeneratorApp';
+import DataTransformerApp from './DataTransformerApp';
 import ApiKeyModal from './components/ApiKeyModal';
 import Header from './components/Header';
 import { getApiKeys, saveApiKeys, isGoogleConfigured as checkGoogleConfig, ApiKeys } from './services/configService';
 import { initGoogleClient, signIn, signOut } from './services/googleFormService';
 import { useLanguage } from './i18n/LanguageContext';
 
-type View = 'home' | 'formGenerator' | 'diagramGenerator' | 'docstringGenerator';
+type View = 'home' | 'formGenerator' | 'diagramGenerator' | 'docstringGenerator' | 'dataTransformer';
 
 // A simple loading spinner component for the language change overlay
 const LoadingSpinner: React.FC = () => (
@@ -71,12 +72,15 @@ export default function App() {
         return <DiagramGeneratorApp />;
       case 'docstringGenerator':
         return <DocstringGeneratorApp />;
+      case 'dataTransformer':
+        return <DataTransformerApp />;
       case 'home':
       default:
         return <HomePage 
                   onNavigateToFormTool={() => navigateTo('formGenerator')} 
                   onNavigateToDiagramTool={() => navigateTo('diagramGenerator')}
                   onNavigateToDocstringTool={() => navigateTo('docstringGenerator')}
+                  onNavigateToDataTransformerTool={() => navigateTo('dataTransformer')}
                />;
     }
   };

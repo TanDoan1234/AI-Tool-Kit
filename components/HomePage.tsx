@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon, ArrowPathIcon } from './icons';
 
 interface HomePageProps {
   onNavigateToFormTool: () => void;
   onNavigateToDiagramTool: () => void;
   onNavigateToDocstringTool: () => void;
+  onNavigateToDataTransformerTool: () => void;
 }
 
-const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool, onNavigateToDocstringTool }) => {
+const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToDiagramTool, onNavigateToDocstringTool, onNavigateToDataTransformerTool }) => {
   const { t } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const qrCodeUrl = "https://i.ibb.co/VYnm5RB3/qr-code.jpg";
@@ -22,7 +23,7 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
               <p className="mt-4 max-w-2xl mx-auto text-lg sm:text-xl text-gray-400">{t('homepage.author')}</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 animate-fade-in-up animation-delay-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 animate-fade-in-up animation-delay-200">
               {/* Form Tool Card */}
               <div 
                   onClick={onNavigateToFormTool}
@@ -63,6 +64,21 @@ const HomePage: React.FC<HomePageProps> = ({ onNavigateToFormTool, onNavigateToD
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool3.title')}</h3>
                   <p className="text-gray-400 flex-grow">{t('homepage.tool3.description')}</p>
+                  <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
+                      {t('homepage.launchTool')} &rarr;
+                  </span>
+              </div>
+
+               {/* Data Transformer Tool Card */}
+               <div 
+                  onClick={onNavigateToDataTransformerTool}
+                  className="group bg-gray-800 rounded-lg shadow-xl p-6 flex flex-col items-center text-center cursor-pointer border-2 border-gray-700/50 hover:border-violet-500 hover:shadow-violet-500/20 transform hover:-translate-y-1 transition-all duration-300"
+              >
+                  <div className="p-4 bg-gray-700 rounded-full mb-4 group-hover:bg-violet-600 transition-colors">
+                      <ArrowPathIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white mb-2">{t('homepage.tool4.title')}</h3>
+                  <p className="text-gray-400 flex-grow">{t('homepage.tool4.description')}</p>
                   <span className="mt-6 inline-block text-sm font-medium text-violet-400 group-hover:underline">
                       {t('homepage.launchTool')} &rarr;
                   </span>

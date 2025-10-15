@@ -17,6 +17,10 @@ const en = {
       title: 'Docstring Generator',
       description: 'Automatically generate comprehensive docstrings for your code snippets in various programming languages.',
     },
+    tool4: {
+      title: 'Data Transformer',
+      description: 'Convert and restructure data between formats like JSON, CSV, XML, and more using simple instructions.',
+    },
     launchTool: 'Launch Tool',
     comingSoon: 'More AI tools coming soon...',
     donationPrompt: 'If you find this useful, consider buying me a coffee! ^^',
@@ -200,6 +204,24 @@ const en = {
     outputTitle: 'Code with Docstring',
     copyCode: 'Copy Code',
     copied: 'Copied!',
+  },
+  dataTransformer: {
+    title: 'AI Data Transformer',
+    subtitle: 'Provide source data and tell the AI how to convert it.',
+    inputDataPlaceholder: 'Paste your source data here (e.g., JSON, CSV, XML)...',
+    instructionPlaceholder: 'e.g., "Convert to CSV with headers", "Extract all user emails into a JSON array", "Transform to XML format"',
+    generateButton: 'Transform Data',
+    generatingButton: 'Transforming...',
+    error: 'Error',
+    tryAgain: 'Try Again',
+    tryExample: {
+      title: 'Or try an example:',
+      jsonToCsv: 'JSON to CSV',
+      jsonToXml: 'JSON to XML',
+    },
+    outputTitle: 'Transformed Data',
+    copyCode: 'Copy Code',
+    copied: 'Copied!',
   }
 };
 
@@ -218,6 +240,10 @@ const vi: typeof en = {
     tool3: {
       title: 'Tạo Docstring',
       description: 'Tự động tạo các docstring chi tiết cho các đoạn mã của bạn bằng nhiều ngôn ngữ lập trình khác nhau.',
+    },
+    tool4: {
+        title: 'Chuyển đổi Dữ liệu',
+        description: 'Chuyển đổi và tái cấu trúc dữ liệu giữa các định dạng như JSON, CSV, XML và hơn thế nữa bằng các hướng dẫn đơn giản.',
     },
     launchTool: 'Mở công cụ',
     comingSoon: 'Sắp có thêm các công cụ AI khác...',
@@ -400,6 +426,24 @@ const vi: typeof en = {
       javascript: 'Hàm JavaScript',
     },
     outputTitle: 'Mã nguồn với Docstring',
+    copyCode: 'Sao chép mã',
+    copied: 'Đã sao chép!',
+  },
+  dataTransformer: {
+    title: 'Trình chuyển đổi Dữ liệu AI',
+    subtitle: 'Cung cấp dữ liệu nguồn và cho AI biết cách chuyển đổi nó.',
+    inputDataPlaceholder: 'Dán dữ liệu nguồn của bạn vào đây (ví dụ: JSON, CSV, XML)...',
+    instructionPlaceholder: 'VD: "Chuyển thành CSV có tiêu đề", "Trích xuất tất cả email người dùng vào một mảng JSON", "Chuyển thành định dạng XML"',
+    generateButton: 'Chuyển đổi Dữ liệu',
+    generatingButton: 'Đang chuyển đổi...',
+    error: 'Lỗi',
+    tryAgain: 'Thử lại',
+    tryExample: {
+      title: 'Hoặc thử một ví dụ:',
+      jsonToCsv: 'JSON sang CSV',
+      jsonToXml: 'JSON sang XML',
+    },
+    outputTitle: 'Dữ liệu đã chuyển đổi',
     copyCode: 'Sao chép mã',
     copied: 'Đã sao chép!',
   }
