@@ -24,7 +24,11 @@ export interface FormSection {
 
 export interface FormDefinition {
   title:string;
-  description: string;
   sections: FormSection[];
   isQuiz?: boolean;
+  quizSettings?: {
+    releaseScoreImmediately?: boolean;
+    showCorrectAnswers?: boolean;
+    showPointValues?: boolean;
+  }
 }

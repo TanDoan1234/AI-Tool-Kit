@@ -32,7 +32,7 @@ export function generateAppsScriptCode(definition: FormDefinition, language: 'en
  * 4. Click the "Save project" icon.
  * 5. From the function dropdown, select "createGoogleFormFromAI" and click "Run".
  * 6. You will be asked to grant permissions. Follow the prompts to allow the script to run.
- * 7. A new Google Form will be created in your Google Drive.
+ * 7. A new Google Form will be created in your Google Drive. Check the logs for the links.
  */`;
 
     const instructionsVI = `/**
@@ -44,128 +44,154 @@ export function generateAppsScriptCode(definition: FormDefinition, language: 'en
  * 4. Nhấp vào biểu tượng "Lưu dự án".
  * 5. Từ menu thả xuống của hàm, chọn "createGoogleFormFromAI" và nhấp vào "Chạy".
  * 6. Bạn sẽ được yêu cầu cấp quyền. Làm theo lời nhắc để cho phép tập lệnh chạy.
- * 7. Một Google Form mới sẽ được tạo trong Google Drive của bạn.
+ * 7. Một Google Form mới sẽ được tạo trong Google Drive của bạn. Kiểm tra nhật ký để xem các liên kết.
  */`;
 
     const instructions = language === 'vi' ? instructionsVI : instructionsEN;
 
-    let code = `${instructions}
-function createGoogleFormFromAI() {
-  // Create the form with the main title and description
+    let codeBody = ``;
+    codeBody += `
+  // Create the form with the main title
   var form = FormApp.create(${scriptString(definition.title)});
-  form.setDescription(${scriptString(definition.description)});
 `;
 
     if (definition.isQuiz) {
-        code += `
+        codeBody += `
   // This is a quiz, so update the form settings accordingly.
   form.setIsQuiz(true);
 `;
-    }
-
-    if (options.shouldCreateSheet) {
-        code += `
-  // Create and link a new Google Sheet to store responses
-  var ss = SpreadsheetApp.create("Responses for " + ${scriptString(definition.title)});
-  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
-  Logger.log('Linked spreadsheet created: ' + ss.getUrl());
+        if (definition.quizSettings) {
+            // Since the UI options were removed, the settings are now fixed.
+            // The comments reflect these fixed defaults.
+            const feedbackCommentEN = `
+  // --- Quiz Feedback Settings ---
+  // NOTE: The following feedback settings cannot be set directly via Apps Script.
+  // You must configure them manually in the Google Forms UI after the form is created.
+  // Go to Settings > Quiz settings for this form to adjust these options:
+  // - Release score: Immediately after each submission
+  // - Respondents can see missed questions: (Manually configure)
+  // - Respondents can see correct answers: No
+  // - Respondents can see point values: No
 `;
+            const feedbackCommentVI = `
+  // --- Cài đặt Phản hồi cho Bài kiểm tra ---
+  // LƯU Ý: Các cài đặt phản hồi sau không thể được thiết lập trực tiếp qua Apps Script.
+  // Bạn phải cấu hình chúng theo cách thủ công trong giao diện người dùng Google Forms sau khi biểu mẫu được tạo.
+  // Đi tới Cài đặt > Cài đặt bài kiểm tra cho biểu mẫu này để điều chỉnh các tùy chọn sau:
+  // - Công bố điểm: Ngay sau mỗi lần nộp
+  // - Người trả lời có thể xem câu hỏi trả lời sai: (Cấu hình thủ công)
+  // - Người trả lời có thể xem câu trả lời đúng: Không
+  // - Người trả lời có thể xem giá trị điểm: Không
+`;
+            codeBody += language === 'vi' ? feedbackCommentVI : feedbackCommentEN;
+        }
     }
-
 
     definition.sections.forEach((section, sectionIndex) => {
-        code += `\n  // --- Questions for Section: ${scriptString(section.title)} ---\n`;
+        codeBody += `\n  // --- Questions for Section: ${scriptString(section.title)} ---\n`;
         
         section.questions.forEach(question => {
-            // Generate a reasonably unique variable name for the item
             const itemVar = "item" + Math.random().toString(36).substring(2, 9);
-            code += `\n  // Question: ${question.title.replace(/\n/g, ' ')}\n`;
+            codeBody += `\n  // Question: ${question.title.replace(/\n/g, ' ')}\n`;
             
             let itemCreationCode = '';
-            let specificItemType = '';
+            let canHavePoints = false;
 
             switch (question.type) {
                 case QuestionType.SHORT_ANSWER:
                     itemCreationCode = `form.addTextItem()`;
-                    specificItemType = 'asTextItem()';
+                    canHavePoints = true;
                     break;
                 case QuestionType.PARAGRAPH:
                     itemCreationCode = `form.addParagraphTextItem()`;
-                    specificItemType = 'asParagraphTextItem()';
+                    canHavePoints = true;
                     break;
                 case QuestionType.MULTIPLE_CHOICE:
                     itemCreationCode = `form.addMultipleChoiceItem()`;
-                    specificItemType = 'asMultipleChoiceItem()';
+                    canHavePoints = true;
                     break;
                 case QuestionType.CHECKBOXES:
                     itemCreationCode = `form.addCheckboxItem()`;
-                    specificItemType = 'asCheckboxItem()';
+                    canHavePoints = true;
                     break;
                 case QuestionType.IMAGE_DISPLAY:
                     itemCreationCode = `form.addImageItem()`;
-                    specificItemType = 'asImageItem()';
+                    canHavePoints = false;
                     break;
                 default:
-                    // Fallback to a standard text item for any unknown types
                     itemCreationCode = `form.addTextItem()`;
-                    specificItemType = 'asTextItem()';
+                    canHavePoints = true;
             }
 
-            code += `  var ${itemVar} = ${itemCreationCode};\n`;
-            code += `  ${itemVar}.setTitle(${scriptString(question.title)});\n`;
+            codeBody += `  var ${itemVar} = ${itemCreationCode};\n`;
+            codeBody += `  ${itemVar}.setTitle(${scriptString(question.title)});\n`;
 
             if (question.required) {
-                code += `  ${itemVar}.setRequired(true);\n`;
+                codeBody += `  ${itemVar}.setRequired(true);\n`;
             }
             
-            if (definition.isQuiz && question.points && question.points > 0) {
-                 if (specificItemType !== 'asImageItem()') {
-                    code += `  ${itemVar}.${specificItemType}.setPoints(${question.points});\n`;
-                 }
+            if (definition.isQuiz && question.points && question.points > 0 && canHavePoints) {
+                codeBody += `  ${itemVar}.setPoints(${question.points});\n`;
             }
 
-
-            // For choice-based questions, add the options and set correct answers
             if ((question.type === QuestionType.MULTIPLE_CHOICE || question.type === QuestionType.CHECKBOXES) && question.options) {
                 const choices = question.options.map(opt => {
                     const isCorrect = (question.correctAnswers || []).includes(opt);
-                    return `${itemVar}.${specificItemType}.createChoice(${scriptString(opt)}, ${isCorrect})`
+                    return `${itemVar}.createChoice(${scriptString(opt)}, ${isCorrect})`
                 }).join(',\n    ');
-                code += `  ${itemVar}.${specificItemType}.setChoices([\n    ${choices}\n  ]);\n`;
+                codeBody += `  ${itemVar}.setChoices([\n    ${choices}\n  ]);\n`;
             }
             
-            // Handle images. For IMAGE_DISPLAY, it's the main content. For others, it's an attachment.
             if (question.imageUrl) {
-                 code += `  try {\n`;
-                 code += `    var imageUrl = ${scriptString(question.imageUrl)};\n`;
-                 code += `    var imageBlob = UrlFetchApp.fetch(imageUrl).getBlob();\n`;
-                 code += `    ${itemVar}.setImage(imageBlob);\n`;
-                 code += `  } catch (e) {\n`;
-                 code += `    Logger.log('Could not fetch image for question "' + ${scriptString(question.title)} + '": ' + e.message);\n`;
-                 code += `    // If image fails to load, add a help text note.\n`;
-                 if (specificItemType !== 'asImageItem()') {
-                    code += `    ${itemVar}.setHelpText('Error: Could not load image from ' + imageUrl);\n`;
+                 codeBody += `  try {\n`;
+                 codeBody += `    var imageUrl = ${scriptString(question.imageUrl)};\n`;
+                 codeBody += `    var imageBlob = UrlFetchApp.fetch(imageUrl).getBlob();\n`;
+                 codeBody += `    ${itemVar}.setImage(imageBlob);\n`;
+                 codeBody += `  } catch (e) {\n`;
+                 codeBody += `    Logger.log('Could not fetch image for question "' + ${scriptString(question.title)} + '": ' + e.message);\n`;
+                 if (question.type !== QuestionType.IMAGE_DISPLAY) {
+                    codeBody += `    ${itemVar}.setHelpText('Error: Could not load image from ' + imageUrl);\n`;
                  }
-                 code += `  }\n`;
+                 codeBody += `  }\n`;
             }
         });
 
-        // Add a page break after the current section if it's not the last one
         if (sectionIndex < definition.sections.length - 1) {
             const nextSection = definition.sections[sectionIndex + 1];
-            code += `\n  // Add page break to start the next section\n`;
-            code += `  var pageBreak_${sectionIndex} = form.addPageBreakItem();\n`;
-            code += `  pageBreak_${sectionIndex}.setTitle(${scriptString(nextSection.title)});\n`;
+            codeBody += `\n  // Add page break to start the next section\n`;
+            codeBody += `  var pageBreak_${sectionIndex} = form.addPageBreakItem();\n`;
+            codeBody += `  pageBreak_${sectionIndex}.setTitle(${scriptString(nextSection.title)});\n`;
             if (nextSection.description) {
-                code += `  pageBreak_${sectionIndex}.setHelpText(${scriptString(nextSection.description)});\n`;
+                codeBody += `  pageBreak_${sectionIndex}.setHelpText(${scriptString(nextSection.description)});\n`;
             }
         }
     });
 
-    code += `\n  Logger.log('Form created successfully!');\n`;
-    code += `  Logger.log('Published URL: ' + form.getPublishedUrl());\n`;
-    code += `  Logger.log('Editor URL: ' + form.getEditUrl());\n`;
-    code += `}\n`;
+    let finalizationCode = ``;
+    let sheetLogCode = ``;
+
+    if (options.shouldCreateSheet) {
+        finalizationCode = `
+  // Create and link a new Google Sheet to store responses
+  var ss = SpreadsheetApp.create("Responses for " + ${scriptString(definition.title)});
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+`;
+        sheetLogCode = `  Logger.log('📊 Responses Sheet: ' + ss.getUrl());\n`;
+    }
+
+    finalizationCode += `
+  // --- Final Summary ---
+  Logger.log('✅ Form creation complete!');
+  Logger.log('➡️ Form Link (for sharing): ' + form.getPublishedUrl());
+  Logger.log('✏️  Editor Link (for you): ' + form.getEditUrl());
+`;
+    finalizationCode += sheetLogCode;
+
+    const fullFunction = `function createGoogleFormFromAI() {
+${codeBody}
+${finalizationCode}
+}
+`;
     
-    return code;
+    return instructions + "\n" + fullFunction;
 }

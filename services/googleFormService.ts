@@ -211,23 +211,25 @@ export async function createGoogleForm(definition: FormDefinition): Promise<stri
         throw new Error("Failed to get formId from creation response.");
     }
     
-    const requests: any[] = [{
-      updateFormInfo: {
-        info: { description: definition.description },
-        updateMask: 'description',
-      },
-    }];
+    const requests: any[] = [];
     
-    // If it's a quiz, add a request to update the form's settings
     if (definition.isQuiz) {
+        const quizSettings: any = { isQuiz: true };
+        const updateMaskPaths = ['quizSettings.isQuiz'];
+
+        if (definition.quizSettings) {
+            quizSettings.grade = {
+                score: definition.quizSettings.releaseScoreImmediately ? 'RELEASED' : 'NOT_RELEASED',
+                correctAnswersShown: !!definition.quizSettings.showCorrectAnswers,
+                pointsShown: !!definition.quizSettings.showPointValues,
+            };
+            updateMaskPaths.push('quizSettings.grade');
+        }
+        
         requests.push({
             updateSettings: {
-                settings: {
-                    quizSettings: {
-                        isQuiz: true
-                    }
-                },
-                updateMask: 'quizSettings.isQuiz'
+                settings: { quizSettings },
+                updateMask: updateMaskPaths.join(',')
             }
         });
     }
@@ -262,7 +264,7 @@ export async function createGoogleForm(definition: FormDefinition): Promise<stri
     });
 
 
-    if (requests.length > 1) { // Only batch update if there are items to add
+    if (requests.length > 0) { // Only batch update if there are items to add
       await gapi.client.forms.forms.batchUpdate({
         formId,
         resource: { requests },

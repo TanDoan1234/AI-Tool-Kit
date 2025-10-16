@@ -186,7 +186,7 @@ const en = {
         makeQuizLabel: "Make this a quiz",
         makeQuizNote: "Mark correct answers in your input with a trailing asterisk (*).",
         defaultPointsLabel: "Default points per question",
-        points: "points"
+        points: "points",
     }
   },
   diagramGenerator: {
@@ -464,8 +464,8 @@ const vi: typeof en = {
         title: "Tùy chọn Bài kiểm tra",
         makeQuizLabel: "Tạo bài kiểm tra",
         makeQuizNote: "Đánh dấu câu trả lời đúng trong đầu vào của bạn bằng một dấu hoa thị (*).",
-        defaultPointsLabel: "Số điểm mặc định cho mỗi câu hỏi",
-        points: "điểm"
+        defaultPointsLabel: "Số điểm mặc định cho mỗi câu",
+        points: "điểm",
     }
   },
   diagramGenerator: {

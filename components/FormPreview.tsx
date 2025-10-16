@@ -13,7 +13,6 @@ const FormPreview: React.FC<FormPreviewProps> = ({ definition }) => {
     <div className="max-w-3xl mx-auto border-t-[10px] border-violet-600 bg-gray-800 rounded-lg shadow-lg">
       <div className="p-6 border-b border-gray-700">
         <h1 className="text-3xl font-normal text-white mb-2">{definition.title}</h1>
-        <p className="text-sm text-gray-400">{definition.description}</p>
         <p className="text-xs text-red-400 mt-4">{t('preview.required')}</p>
       </div>
       <div className="p-2 sm:p-4 bg-gray-900">

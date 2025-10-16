@@ -31,11 +31,11 @@ export default function FormGeneratorApp({
 Sign up for our annual tech conference!
 
 ## Personal Information
-* Full Name (Short Answer, required)
-* Email Address (Short Answer, required)
+Question 1: Full Name (Short Answer, required)
+Question 2: Email Address (Short Answer, required)
 
 ## T-Shirt Size
-What's your t-shirt size? (Multiple Choice)
+Question 3: What's your t-shirt size? (Multiple Choice)
 - Small
 - Medium
 - Large
@@ -43,15 +43,14 @@ What's your t-shirt size? (Multiple Choice)
 
 ![T-shirt graphic](https://via.placeholder.com/400x200.png/94a3e9/ffffff?text=Cool+T-Shirt)
 
-## Dietary Restrictions
-Please list any dietary restrictions. (Paragraph)
+Question 4: Please list any dietary restrictions. (Paragraph)
 `,
       json: `{
   "requests": [
     {
       "createItem": {
         "item": {
-          "title": "Your Name",
+          "title": "Question 1: Your Name",
           "questionItem": { "question": { "required": true, "textQuestion": {} } }
         }
       }
@@ -59,7 +58,7 @@ Please list any dietary restrictions. (Paragraph)
     {
       "createItem": {
         "item": {
-          "title": "Your primary development area?",
+          "title": "Question 2: Your primary development area?",
           "questionItem": {
             "question": {
               "choiceQuestion": {
@@ -77,16 +76,16 @@ Please list any dietary restrictions. (Paragraph)
   <h1>Website Feedback</h1>
   <p>Help us improve by answering a few questions.</p>
   
-  <label for="email">Your Email:</label>
+  <label for="email">Question 1: Your Email:</label>
   <input type="email" id="email" name="email" required>
   
-  <p>Which features do you use? (Check all that apply)</p>
+  <p>Question 2: Which features do you use? (Check all that apply)</p>
   <input type="checkbox" id="feature1" value="Dashboard">
   <label for="feature1">Dashboard</label><br>
   <input type="checkbox" id="feature2" value="Analytics">
   <label for="feature2">Analytics</label><br>
   
-  <label for="comments">Any other suggestions?</label>
+  <label for="comments">Question 3: Any other suggestions?</label>
   <textarea id="comments" rows="5"></textarea>
 </form>
 `
@@ -96,11 +95,11 @@ Please list any dietary restrictions. (Paragraph)
 Đăng ký tham gia hội nghị công nghệ hàng năm của chúng tôi!
 
 ## Thông tin cá nhân
-* Họ và tên (Trả lời ngắn, bắt buộc)
-* Địa chỉ Email (Trả lời ngắn, bắt buộc)
+Câu 1: Họ và tên (Trả lời ngắn, bắt buộc)
+Câu 2: Địa chỉ Email (Trả lời ngắn, bắt buộc)
 
 ## Cỡ áo
-Cỡ áo của bạn là gì? (Trắc nghiệm)
+Câu 3: Cỡ áo của bạn là gì? (Trắc nghiệm)
 - Nhỏ (S)
 - Vừa (M)
 - Lớn (L)
@@ -108,15 +107,14 @@ Cỡ áo của bạn là gì? (Trắc nghiệm)
 
 ![Hình áo thun](https://via.placeholder.com/400x200.png/94a3e9/ffffff?text=Ao+Thun+Dep)
 
-## Yêu cầu về ăn uống
-Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đoạn văn)
+Câu 4: Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đoạn văn)
 `,
       json: `{
   "requests": [
     {
       "createItem": {
         "item": {
-          "title": "Tên của bạn",
+          "title": "Câu 1: Tên của bạn",
           "questionItem": { "question": { "required": true, "textQuestion": {} } }
         }
       }
@@ -124,7 +122,7 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
     {
       "createItem": {
         "item": {
-          "title": "Lĩnh vực phát triển chính của bạn là gì?",
+          "title": "Câu 2: Lĩnh vực phát triển chính của bạn là gì?",
           "questionItem": {
             "question": {
               "choiceQuestion": {
@@ -142,16 +140,16 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
   <h1>Phản hồi về trang web</h1>
   <p>Giúp chúng tôi cải thiện bằng cách trả lời một vài câu hỏi.</p>
   
-  <label for="email">Email của bạn:</label>
+  <label for="email">Câu 1: Email của bạn:</label>
   <input type="email" id="email" name="email" required>
   
-  <p>Bạn sử dụng những tính năng nào? (Chọn tất cả các mục phù hợp)</p>
+  <p>Câu 2: Bạn sử dụng những tính năng nào? (Chọn tất cả các mục phù hợp)</p>
   <input type="checkbox" id="feature1" value="Bảng điều khiển">
   <label for="feature1">Bảng điều khiển</label><br>
   <input type="checkbox" id="feature2" value="Phân tích">
   <label for="feature2">Phân tích</label><br>
   
-  <label for="comments">Bạn có đề xuất nào khác không?</label>
+  <label for="comments">Câu 3: Bạn có đề xuất nào khác không?</label>
   <textarea id="comments" rows="5"></textarea>
 </form>
 `
@@ -163,19 +161,19 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
       markdown: `# Vietnam History Quiz
 Test your knowledge of Vietnamese history.
 
-## Multiple Choice Questions
-What was the ancient name of Hanoi? (Multiple Choice, required)
+## Multiple Choice
+Question 1: What was the ancient name of Hanoi? (Multiple Choice, required)
 - Gia Định
 - Thăng Long*
 - Phú Xuân
 
-Which dynasty unified Vietnam in the 11th century? (Multiple Choice)
+Question 2: Which dynasty unified Vietnam in the 11th century? (Multiple Choice)
 - Trần Dynasty
 - Lê Dynasty
 - Lý Dynasty*
 
-## Checkbox Questions
-Which of the following cities have been capitals of Vietnam at some point in history? (Checkboxes, required)
+## Checkboxes
+Question 3: Which of the following cities have been capitals of Vietnam at some point in history? (Checkboxes, required)
 - Huế*
 - Sài Gòn
 - Hoa Lư*
@@ -188,13 +186,13 @@ Which of the following cities have been capitals of Vietnam at some point in his
     "title": "Arithmetic",
     "questions": [
       {
-        "title": "What is 2 + 2?",
+        "title": "Question 1: What is 2 + 2?",
         "type": "MULTIPLE_CHOICE",
         "options": ["3", "4*", "5"],
         "required": true
       },
       {
-        "title": "Which numbers are even?",
+        "title": "Question 2: Which numbers are even?",
         "type": "CHECKBOXES",
         "options": ["1", "2*", "3", "4*"]
       }
@@ -203,12 +201,12 @@ Which of the following cities have been capitals of Vietnam at some point in his
 }`,
       html: `<form>
   <h1>Capital Cities Quiz</h1>
-  <p>What is the capital of France? (required)</p>
+  <p>Question 1: What is the capital of France? (required)</p>
   <input type="radio" name="q1"> London<br>
   <input type="radio" name="q1"> Berlin<br>
   <input type="radio" name="q1"> Paris*<br>
   
-  <p>Which of these are countries in Asia?</p>
+  <p>Question 2: Which of these are countries in Asia?</p>
   <input type="checkbox"> Japan*<br>
   <input type="checkbox"> Brazil<br>
   <input type="checkbox"> Vietnam*<br>
@@ -219,19 +217,19 @@ Which of the following cities have been capitals of Vietnam at some point in his
       markdown: `# Trắc nghiệm Lịch sử Việt Nam
 Kiểm tra kiến thức của bạn về lịch sử Việt Nam.
 
-## Câu hỏi trắc nghiệm
-Tên gọi xưa của Hà Nội là gì? (Trắc nghiệm, bắt buộc)
+## Trắc nghiệm
+Câu 1: Tên gọi xưa của Hà Nội là gì? (Trắc nghiệm, bắt buộc)
 - Gia Định
 - Thăng Long*
 - Phú Xuân
 
-Triều đại nào đã thống nhất Việt Nam vào thế kỷ 11? (Trắc nghiệm)
+Câu 2: Triều đại nào đã thống nhất Việt Nam vào thế kỷ 11? (Trắc nghiệm)
 - Nhà Trần
 - Nhà Lê
 - Nhà Lý*
 
-## Câu hỏi hộp kiểm
-Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong lịch sử? (Hộp kiểm, bắt buộc)
+## Hộp kiểm
+Câu 3: Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong lịch sử? (Hộp kiểm, bắt buộc)
 - Huế*
 - Sài Gòn
 - Hoa Lư*
@@ -244,13 +242,13 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
     "title": "Số học",
     "questions": [
       {
-        "title": "2 + 2 bằng mấy?",
+        "title": "Câu 1: 2 + 2 bằng mấy?",
         "type": "MULTIPLE_CHOICE",
         "options": ["3", "4*", "5"],
         "required": true
       },
       {
-        "title": "Số nào là số chẵn?",
+        "title": "Câu 2: Số nào là số chẵn?",
         "type": "CHECKBOXES",
         "options": ["1", "2*", "3", "4*"]
       }
@@ -259,12 +257,12 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
 }`,
       html: `<form>
   <h1>Trắc nghiệm Thủ đô các nước</h1>
-  <p>Thủ đô của Pháp là gì? (bắt buộc)</p>
+  <p>Câu 1: Thủ đô của Pháp là gì? (bắt buộc)</p>
   <input type="radio" name="q1"> Luân Đôn<br>
   <input type="radio" name="q1"> Berlin<br>
   <input type="radio" name="q1"> Paris*<br>
   
-  <p>Nước nào sau đây thuộc châu Á?</p>
+  <p>Câu 2: Nước nào sau đây thuộc châu Á?</p>
   <input type="checkbox"> Nhật Bản*<br>
   <input type="checkbox"> Brazil<br>
   <input type="checkbox"> Việt Nam*<br>
@@ -283,21 +281,38 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
   const [formUrl, setFormUrl] = useState<string | null>(null);
   const [isCreatingForm, setIsCreatingForm] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  
+  // Advanced & Quiz Options State
   const [shouldCreateSheet, setShouldCreateSheet] = useState(false);
   const [isQuiz, setIsQuiz] = useState(false);
   const [defaultPoints, setDefaultPoints] = useState(10);
 
+
   const currentExamples = isQuiz ? quizExamples[language] : formExamples[language];
+
+  const getFullDefinition = (baseDefinition: FormDefinition): FormDefinition => {
+    return {
+      ...baseDefinition,
+      isQuiz: isQuiz,
+      quizSettings: isQuiz ? {
+        releaseScoreImmediately: true,
+        showCorrectAnswers: false,
+        showPointValues: false,
+      } : undefined
+    };
+  };
 
   useEffect(() => {
     if (formDefinition) {
-      const script = generateAppsScriptCode(formDefinition, language, { shouldCreateSheet });
+      const fullDefinition = getFullDefinition(formDefinition);
+      const script = generateAppsScriptCode(fullDefinition, language, { shouldCreateSheet });
       setGeneratedScript(script);
     } else {
       setGeneratedScript('');
     }
     setFormUrl(null);
-  }, [formDefinition, language, shouldCreateSheet]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formDefinition, language, shouldCreateSheet, isQuiz]);
 
   const handleGenerate = async () => {
     if (!userInput.trim()) return;
@@ -306,14 +321,7 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
     setFormDefinition(null);
     setActiveTab('preview');
     try {
-      let finalUserInput = userInput;
-      if (isQuiz) {
-        const quizInstruction = language === 'vi' 
-          ? `Đây là một bài kiểm tra. Gán ${defaultPoints} điểm cho mỗi câu hỏi có câu trả lời đúng.`
-          : `This is a quiz. Assign ${defaultPoints} points to each question that has a correct answer.`;
-        finalUserInput = `${quizInstruction}\n\n---\n\n${userInput}`;
-      }
-      const definition = await generateFormDefinition(finalUserInput, language);
+      const definition = await generateFormDefinition(userInput, language, { isQuiz, defaultPoints });
       setFormDefinition(definition);
     } catch (e: any) {
       setError(e.message || 'An unknown error occurred.');
@@ -338,7 +346,8 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
     setFormUrl(null);
 
     try {
-      const url = await createGoogleForm(formDefinition);
+      const fullDefinition = getFullDefinition(formDefinition);
+      const url = await createGoogleForm(fullDefinition);
       setFormUrl(url);
     } catch (e: any) {
       setError(e.message || 'An unknown error occurred while creating the form.');
@@ -413,17 +422,23 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
                         </div>
                     </div>
                     {isQuiz && (
-                         <div className="mt-3 pl-7">
-                            <label htmlFor="defaultPoints" className="text-sm font-medium text-gray-300">
+                        <div className="mt-4 pl-7 animate-fade-in-fast">
+                            <label htmlFor="defaultPoints" className="block text-sm font-medium text-gray-300">
                                 {t('formGenerator.quiz.defaultPointsLabel')}
                             </label>
-                            <input
-                                type="number"
-                                id="defaultPoints"
-                                value={defaultPoints}
-                                onChange={(e) => setDefaultPoints(parseInt(e.target.value, 10) || 0)}
-                                className="mt-1 block w-full max-w-xs bg-gray-700 border border-gray-600 rounded-md shadow-sm py-1.5 px-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
-                            />
+                            <div className="mt-1 flex rounded-md shadow-sm">
+                                <input
+                                    type="number"
+                                    id="defaultPoints"
+                                    value={defaultPoints}
+                                    onChange={(e) => setDefaultPoints(Number(e.target.value) >= 0 ? Number(e.target.value) : 0)}
+                                    className="block w-24 rounded-l-md border-gray-500 bg-gray-700 text-white focus:border-violet-500 focus:ring-violet-500 sm:text-sm p-2"
+                                    min="0"
+                                />
+                                <span className="inline-flex items-center rounded-r-md border border-l-0 border-gray-500 bg-gray-600 px-3 text-sm text-gray-300">
+                                    {t('formGenerator.quiz.points')}
+                                </span>
+                            </div>
                         </div>
                     )}
                 </div>
@@ -566,7 +581,7 @@ Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong l�
 
              {isLoading && (
                  <div className="flex items-center justify-center h-full">
-                    <svg className="animate-spin h-10 w-10 text-violet-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="http://www.w3.org/2000/svg">
+                    <svg className="animate-spin h-10 w-10 text-violet-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 2000/svg">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
