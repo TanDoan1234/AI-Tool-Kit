@@ -46,10 +46,12 @@ const en = {
   modal: {
     close: 'Close',
     title: 'API Key Configuration',
-    subtitle: "To enable Google Form creation, please provide your Google Cloud API Key and Client ID. Your keys are stored securely in your browser's local storage and are never sent to our servers.",
-    googleApiLabel: 'Google Cloud API Key',
+    subtitle: "Provide your API keys below. Your keys are stored securely in your browser's local storage and are never sent to our servers.",
+    geminiApiLabel: 'Gemini API Key (Required)',
+    geminiApiHint: 'Used for all AI generation features.',
+    googleApiLabel: 'Google Cloud API Key (Optional)',
     googleApiHint: 'Used for the Google Forms API.',
-    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID',
+    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID (Optional)',
     googleClientIdHint: 'Used for user authentication to create forms on your behalf.',
     cloudConsoleLink: 'Google Cloud Console',
     cancel: 'Cancel',
@@ -74,8 +76,8 @@ const en = {
       subtitle: 'Follow these steps to enable all features of the AI Form Generator.',
     },
     step1: {
-      title: 'Get Your Gemini API Key',
-      p1: 'The Gemini API key is required to use the AI generation features. This application is configured to read this key from an environment variable for security.',
+      title: 'Get Your Gemini API Key (Required)',
+      p1: 'The Gemini API key is required to use the AI generation features. You can get a free key from Google AI Studio.',
       li1: {
         text: 'Go to',
       },
@@ -85,11 +87,11 @@ const en = {
         button: 'Create API key',
       },
       li4: {
-        text: 'Create a `.env.local` file in the project root and add your key: `API_KEY="YOUR_API_KEY"`.',
+        text: 'Copy the key and paste it into the Gemini API Key field in this application\'s settings (⚙️ icon).',
       }
     },
     step2: {
-      title: 'Set up Google Cloud for Form Creation',
+      title: 'Set up Google Cloud for Form Creation (Optional)',
       p1: 'To automatically create forms in your Google Drive, you need to configure a Google Cloud project with the right APIs and credentials. This is a one-time setup.',
       step2_1: {
         title: 'Create a Google Cloud Project',
@@ -133,13 +135,17 @@ const en = {
     },
     step3: {
       title: 'Enter Keys into the App',
-      p1: "Finally, enter the two keys you obtained from Google Cloud into the application's settings.",
+      p1: "Finally, enter the keys you obtained into the application's settings.",
       li1: 'Click the settings icon (gear) in the top right corner of the app.',
-      li2: 'Paste your Google Cloud API Key.',
-      li3: 'Paste your Google Cloud OAuth 2.0 Client ID.',
+      li2: 'Paste your Gemini API Key.',
+      li3: 'If you want to create Google Forms, also paste your Google Cloud API Key and OAuth Client ID.',
       li4: { text: 'Click', button: 'Save and Reload', text2: 'The page will refresh.' },
-      li5: 'You should now be able to sign in with Google and create forms!',
+      li5: 'You should now be able to use all the features!',
     }
+  },
+  errors: {
+    apiKeyMissing: 'Gemini API Key is missing. Please configure it to use AI features.',
+    goToSettings: 'Go to Settings',
   },
   formGenerator: {
     title: 'AI Form Generator',
@@ -325,10 +331,12 @@ const vi: typeof en = {
   modal: {
     close: 'Đóng',
     title: 'Cấu hình API Key',
-    subtitle: 'Để kích hoạt chức năng tạo Google Form, vui lòng cung cấp Google Cloud API Key và Client ID của bạn. Các khóa này được lưu trữ an toàn trong bộ nhớ cục bộ của trình duyệt và không bao giờ được gửi đến máy chủ của chúng tôi.',
-    googleApiLabel: 'Google Cloud API Key',
+    subtitle: 'Cung cấp các API key của bạn dưới đây. Các khóa của bạn được lưu trữ an toàn trong bộ nhớ cục bộ của trình duyệt và không bao giờ được gửi đến máy chủ của chúng tôi.',
+    geminiApiLabel: 'Gemini API Key (Bắt buộc)',
+    geminiApiHint: 'Sử dụng cho tất cả các tính năng tạo bằng AI.',
+    googleApiLabel: 'Google Cloud API Key (Tùy chọn)',
     googleApiHint: 'Sử dụng cho Google Forms API.',
-    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID',
+    googleClientIdLabel: 'Google Cloud OAuth 2.0 Client ID (Tùy chọn)',
     googleClientIdHint: 'Sử dụng để xác thực người dùng và tạo biểu mẫu thay mặt bạn.',
     cloudConsoleLink: 'Google Cloud Console',
     cancel: 'Hủy',
@@ -353,8 +361,8 @@ const vi: typeof en = {
       subtitle: 'Làm theo các bước sau để kích hoạt tất cả các tính năng của Trình tạo biểu mẫu AI.',
     },
     step1: {
-      title: 'Lấy Gemini API Key của bạn',
-      p1: 'Cần có Gemini API key để sử dụng các tính năng tạo của AI. Ứng dụng này được cấu hình để đọc khóa này từ một biến môi trường để bảo mật.',
+      title: 'Lấy Gemini API Key của bạn (Bắt buộc)',
+      p1: 'Cần có Gemini API key để sử dụng các tính năng tạo của AI. Bạn có thể nhận khóa miễn phí từ Google AI Studio.',
       li1: {
         text: 'Đi đến',
       },
@@ -364,11 +372,11 @@ const vi: typeof en = {
         button: 'Tạo API key',
       },
       li4: {
-        text: 'Tạo một tệp `.env.local` ở thư mục gốc của dự án và thêm khóa của bạn: `API_KEY="YOUR_API_KEY"`.',
+        text: 'Sao chép khóa và dán vào trường Gemini API Key trong phần cài đặt (⚙️) của ứng dụng này.',
       }
     },
     step2: {
-      title: 'Thiết lập Google Cloud để tạo Biểu mẫu',
+      title: 'Thiết lập Google Cloud để tạo Biểu mẫu (Tùy chọn)',
       p1: 'Để tự động tạo biểu mẫu trong Google Drive của bạn, bạn cần định cấu hình một dự án Google Cloud với các API và thông tin xác thực phù hợp. Đây là thiết lập một lần.',
       step2_1: {
         title: 'Tạo một dự án Google Cloud',
@@ -412,13 +420,17 @@ const vi: typeof en = {
     },
     step3: {
       title: 'Nhập các khóa vào ứng dụng',
-      p1: 'Cuối cùng, nhập hai khóa bạn đã nhận được từ Google Cloud vào cài đặt của ứng dụng.',
+      p1: 'Cuối cùng, nhập các khóa bạn đã nhận được vào cài đặt của ứng dụng.',
       li1: 'Nhấp vào biểu tượng cài đặt (bánh răng) ở góc trên cùng bên phải của ứng dụng.',
-      li2: 'Dán Google Cloud API Key của bạn.',
-      li3: 'Dán ID khách OAuth 2.0 của Google Cloud.',
+      li2: 'Dán Gemini API Key của bạn.',
+      li3: 'Nếu bạn muốn tạo Google Forms, hãy dán cả Google Cloud API Key và OAuth Client ID.',
       li4: { text: 'Nhấp vào', button: 'Lưu và Tải lại', text2: 'Trang sẽ được làm mới.' },
-      li5: 'Bây giờ bạn có thể đăng nhập bằng Google và tạo biểu mẫu!',
+      li5: 'Bây giờ bạn có thể sử dụng tất cả các tính năng!',
     }
+  },
+  errors: {
+    apiKeyMissing: 'Thiếu Gemini API Key. Vui lòng cấu hình để sử dụng các tính năng AI.',
+    goToSettings: 'Đi đến Cài đặt',
   },
   formGenerator: {
     title: 'Trình tạo biểu mẫu AI',

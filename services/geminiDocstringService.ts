@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { isGeminiConfigured } from './configService';
+import { getApiKeys, isGeminiConfigured } from './configService';
 
 const docstringSchema = {
   type: Type.OBJECT,
@@ -19,9 +19,10 @@ const docstringSchema = {
 
 export async function generateDocstring(codeInput: string, language: 'en' | 'vi'): Promise<{ language: string; code: string; }> {
   if (!isGeminiConfigured()) {
-    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
+    throw new Error("Gemini API key is not configured. Please set it in the settings (⚙️ icon).");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const { geminiApiKey } = getApiKeys();
+  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
   const systemInstruction = language === 'vi' 
   ? `Bạn là một trợ lý chuyên gia về tài liệu mã nguồn.

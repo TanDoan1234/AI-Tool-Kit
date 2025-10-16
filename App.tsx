@@ -62,6 +62,8 @@ export default function App() {
   };
   
   const renderContent = () => {
+    const onOpenSettings = () => setIsApiModalOpen(true);
+
     switch (currentView) {
       case 'formGenerator':
         return <FormGeneratorApp 
@@ -69,17 +71,18 @@ export default function App() {
                   isSignedIn={isSignedIn} 
                   isGoogleConfigAvailable={isGoogleConfigAvailable} 
                   onSignIn={signIn}
+                  onOpenSettings={onOpenSettings}
                 />;
       case 'diagramGenerator':
-        return <DiagramGeneratorApp />;
+        return <DiagramGeneratorApp onOpenSettings={onOpenSettings} />;
       case 'docstringGenerator':
-        return <DocstringGeneratorApp />;
+        return <DocstringGeneratorApp onOpenSettings={onOpenSettings} />;
       case 'dataTransformer':
-        return <DataTransformerApp />;
+        return <DataTransformerApp onOpenSettings={onOpenSettings} />;
       case 'sqlQueryWriter':
-        return <SqlQueryWriterApp />;
+        return <SqlQueryWriterApp onOpenSettings={onOpenSettings} />;
       case 'unitTestGenerator':
-        return <UnitTestGeneratorApp />;
+        return <UnitTestGeneratorApp onOpenSettings={onOpenSettings} />;
       case 'home':
       default:
         return <HomePage 

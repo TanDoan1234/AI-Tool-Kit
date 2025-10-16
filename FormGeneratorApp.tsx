@@ -13,6 +13,7 @@ interface FormGeneratorAppProps {
   isSignedIn: boolean;
   isGoogleConfigAvailable: boolean;
   onSignIn: () => void;
+  onOpenSettings: () => void;
 }
 
 type ActiveTab = 'preview' | 'google-form' | 'apps-script';
@@ -21,7 +22,8 @@ export default function FormGeneratorApp({
   isGoogleReady,
   isSignedIn,
   isGoogleConfigAvailable,
-  onSignIn
+  onSignIn,
+  onOpenSettings
 }: FormGeneratorAppProps) {
   const { t, language } = useLanguage();
 
@@ -474,13 +476,34 @@ Câu 3: Thành phố nào sau đây đã từng là thủ đô của Việt Nam 
 
           {/* Right Panel: Output */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-1 sm:p-2 flex flex-col animate-fade-in-right">
-            {error && (
-              <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
-                <h3 className="font-bold">{t('formGenerator.error')}</h3>
-                <p className="text-sm">{error}</p>
-                <button onClick={() => setError(null)} className="text-sm underline mt-2">{t('formGenerator.tryAgain')}</button>
-              </div>
-            )}
+            {error && (() => {
+              const isApiKeyError = error.includes('API key is not configured');
+              return (
+                <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
+                  <h3 className="font-bold">{t('formGenerator.error')}</h3>
+                  <p className="text-sm">
+                    {isApiKeyError ? t('errors.apiKeyMissing') : error}
+                  </p>
+                  <div className="mt-3">
+                    {isApiKeyError ? (
+                      <button
+                        onClick={() => {
+                          setError(null);
+                          onOpenSettings();
+                        }}
+                        className="text-sm font-semibold text-white bg-violet-600 hover:bg-violet-700 px-4 py-2 rounded-md transition-colors"
+                      >
+                        {t('errors.goToSettings')}
+                      </button>
+                    ) : (
+                      <button onClick={() => setError(null)} className="text-sm underline hover:text-white">
+                        {t('formGenerator.tryAgain')}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
             
             {formDefinition && (
                <div className="flex flex-col h-full">

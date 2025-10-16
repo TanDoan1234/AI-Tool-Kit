@@ -49,7 +49,11 @@ const CLASS_EXAMPLE = `classDiagram
 
 type ActiveTab = 'diagram' | 'code';
 
-export default function DiagramGeneratorApp() {
+interface DiagramGeneratorAppProps {
+  onOpenSettings: () => void;
+}
+
+export default function DiagramGeneratorApp({ onOpenSettings }: DiagramGeneratorAppProps) {
   const { t, language } = useLanguage();
   const [userInput, setUserInput] = useState('');
   const [diagramCode, setDiagramCode] = useState<string>('');
@@ -123,13 +127,34 @@ export default function DiagramGeneratorApp() {
 
           {/* Right Panel: Output */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-1 sm:p-2 flex flex-col animate-fade-in-right">
-            {error && (
-              <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
-                <h3 className="font-bold">{t('diagramGenerator.error')}</h3>
-                <p className="text-sm">{error}</p>
-                <button onClick={() => setError(null)} className="text-sm underline mt-2">{t('diagramGenerator.tryAgain')}</button>
-              </div>
-            )}
+            {error && (() => {
+              const isApiKeyError = error.includes('API key is not configured');
+              return (
+                <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
+                  <h3 className="font-bold">{t('diagramGenerator.error')}</h3>
+                  <p className="text-sm">
+                    {isApiKeyError ? t('errors.apiKeyMissing') : error}
+                  </p>
+                  <div className="mt-3">
+                    {isApiKeyError ? (
+                      <button
+                        onClick={() => {
+                          setError(null);
+                          onOpenSettings();
+                        }}
+                        className="text-sm font-semibold text-white bg-violet-600 hover:bg-violet-700 px-4 py-2 rounded-md transition-colors"
+                      >
+                        {t('errors.goToSettings')}
+                      </button>
+                    ) : (
+                      <button onClick={() => setError(null)} className="text-sm underline hover:text-white">
+                        {t('diagramGenerator.tryAgain')}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
             
             {diagramCode && (
                <div className="flex flex-col h-full">

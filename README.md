@@ -21,20 +21,20 @@
 - Một tài khoản Google.
 - Một trình duyệt web.
 
-### Bước 1: Lấy Gemini API Key
+### Bước 1: Lấy Gemini API Key (BẮT BUỘC)
 
-Đây là key để sử dụng mô hình ngôn ngữ của Google (Gemini) để phân tích câu hỏi của bạn.
+Đây là key để sử dụng mô hình ngôn ngữ của Google (Gemini) cho tất cả các tính năng AI của ứng dụng.
 
 1.  Truy cập **[Google AI Studio](https://aistudio.google.com/app/apikey)**.
 2.  Đăng nhập bằng tài khoản Google của bạn.
 3.  Nhấp vào nút **"Create API key in new project"**.
 4.  Một API key sẽ được tạo ra. Sao chép (copy) key này và lưu lại cẩn thận.
 
-> **Key này sẽ được dán vào ô `Gemini API Key` trong ứng dụng.**
+> **Key này sẽ được dán vào ô `Gemini API Key` trong phần cài đặt (⚙️) của ứng dụng.**
 
-### Bước 2: Cấu hình Google Cloud và Lấy Keys
+### Bước 2: Cấu hình Google Cloud (Tùy chọn - Chỉ để tạo Google Form)
 
-Phần này phức tạp hơn một chút vì chúng ta cần hai loại key từ Google Cloud Platform (GCP) để tạo form và cho phép người dùng đăng nhập.
+Phần này phức tạp hơn một chút vì chúng ta cần hai loại key từ Google Cloud Platform (GCP) để tạo form và cho phép người dùng đăng nhập. Chỉ cần thực hiện nếu bạn muốn tạo Google Forms trực tiếp từ ứng dụng.
 
 #### 2.1. Tạo một dự án Google Cloud mới
 
@@ -102,27 +102,17 @@ Key này dùng để xác thực các yêu cầu đến Google Forms API.
 
 ## Hướng dẫn sử dụng ứng dụng
 
-Sau khi đã có đủ 3 loại key, bạn có thể bắt đầu sử dụng.
+Sau khi đã có đủ các key cần thiết, bạn có thể bắt đầu sử dụng.
 
 #### Bước 1: Nhập API Keys vào ứng dụng
 
 1.  Mở ứng dụng.
 2.  Nhấp vào biểu tượng bánh răng cài đặt (⚙️) ở góc trên bên phải.
-3.  Dán 3 keys bạn đã lấy được vào các ô tương ứng.
+3.  Dán các keys bạn đã lấy được vào các ô tương ứng.
 4.  Nhấp **"Save and Reload"**. Trang sẽ tự động tải lại để áp dụng cấu hình mới.
 
-#### Bước 2: Tạo bản xem trước
+#### Bước 2: Sử dụng các công cụ AI
 
-1.  Sử dụng menu thả xuống để chọn một ví dụ có sẵn (Markdown, JSON, hoặc HTML).
-2.  Hoặc, xóa nội dung trong ô và dán văn bản chứa các câu hỏi của riêng bạn.
-3.  Nhấp vào nút **"Generate Form Preview"**.
-4.  Chờ một vài giây để AI phân tích và hiển thị bản xem trước của biểu mẫu bên dưới.
-
-#### Bước 3: Tạo Google Form thực tế
-
-1.  Sau khi bản xem trước hiện ra, một khu vực mới sẽ xuất hiện ở dưới cùng.
-2.  Nhấp vào **"Sign in with Google"**.
-3.  Một cửa sổ pop-up sẽ hiện ra, hãy đăng nhập bằng chính tài khoản Google mà bạn đã thêm vào danh sách "Test users" ở bước 2.4.
-4.  Sau khi đăng nhập thành công, nút sẽ đổi thành **"Create Google Form"**.
-5.  Nhấp vào nút đó. Ứng dụng sẽ gọi API và tạo một biểu mẫu mới trong Google Drive của bạn.
-6.  Khi hoàn tất, một liên kết đến biểu mẫu mới tạo sẽ được hiển thị. Bạn có thể sao chép liên kết này hoặc nhấp vào "Create another form" để bắt đầu lại.
+1.  Chọn một công cụ từ trang chủ.
+2.  Nhập dữ liệu đầu vào theo yêu cầu.
+3.  Nhấp vào nút "Generate" để AI xử lý và xem kết quả.

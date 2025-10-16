@@ -7,29 +7,25 @@ export interface ApiKeys {
 const STORAGE_KEY = 'ai-form-generator-apikeys';
 
 /**
- * Retrieves API keys. The Gemini key comes ONLY from environment variables,
- * while Google keys can come from localStorage or environment variables.
+ * Retrieves API keys from localStorage, with environment variables as a fallback.
  */
 export function getApiKeys(): ApiKeys {
   const storedKeys = localStorage.getItem(STORAGE_KEY);
   const parsedKeys = storedKeys ? JSON.parse(storedKeys) : {};
   
   return {
-    // FIX: Per guidelines, Gemini API Key must come exclusively from environment variables.
-    geminiApiKey: process.env.API_KEY || '',
+    geminiApiKey: parsedKeys.geminiApiKey || process.env.API_KEY || '',
     googleApiKey: parsedKeys.googleApiKey || process.env.GOOGLE_API_KEY || '',
     googleClientId: parsedKeys.googleClientId || process.env.GOOGLE_CLIENT_ID || '',
   };
 }
 
 /**
- * Saves the provided API keys to localStorage, excluding the Gemini key.
+ * Saves the provided API keys to localStorage.
  * @param keys The API keys to save.
  */
 export function saveApiKeys(keys: ApiKeys): void {
-  // FIX: Per guidelines, do not store or manage the Gemini API key in the UI/localStorage.
-  const { geminiApiKey, ...googleKeys } = keys;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(googleKeys));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(keys));
 }
 
 /**
@@ -44,6 +40,6 @@ export function isGoogleConfigured(): boolean {
  * Checks if the necessary key for Gemini integration is present.
  */
 export function isGeminiConfigured(): boolean {
-    // FIX: Per guidelines, Gemini API key must be from process.env.API_KEY.
-    return !!process.env.API_KEY;
+    const keys = getApiKeys();
+    return !!keys.geminiApiKey;
 }

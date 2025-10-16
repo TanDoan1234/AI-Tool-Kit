@@ -45,7 +45,11 @@ interface GenerationResult {
   code: string;
 }
 
-export default function DocstringGeneratorApp() {
+interface DocstringGeneratorAppProps {
+  onOpenSettings: () => void;
+}
+
+export default function DocstringGeneratorApp({ onOpenSettings }: DocstringGeneratorAppProps) {
   const { t, language } = useLanguage();
   const [userInput, setUserInput] = useState('');
   const [result, setResult] = useState<GenerationResult | null>(null);
@@ -125,13 +129,34 @@ export default function DocstringGeneratorApp() {
 
           {/* Right Panel: Output */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-1 sm:p-2 flex flex-col animate-fade-in-right">
-            {error && (
-              <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
-                <h3 className="font-bold">{t('docstringGenerator.error')}</h3>
-                <p className="text-sm">{error}</p>
-                <button onClick={() => setError(null)} className="text-sm underline mt-2">{t('docstringGenerator.tryAgain')}</button>
-              </div>
-            )}
+            {error && (() => {
+              const isApiKeyError = error.includes('API key is not configured');
+              return (
+                <div className="m-4 p-4 bg-red-900/50 border border-red-700 text-red-300 rounded-md">
+                  <h3 className="font-bold">{t('docstringGenerator.error')}</h3>
+                  <p className="text-sm">
+                    {isApiKeyError ? t('errors.apiKeyMissing') : error}
+                  </p>
+                  <div className="mt-3">
+                    {isApiKeyError ? (
+                      <button
+                        onClick={() => {
+                          setError(null);
+                          onOpenSettings();
+                        }}
+                        className="text-sm font-semibold text-white bg-violet-600 hover:bg-violet-700 px-4 py-2 rounded-md transition-colors"
+                      >
+                        {t('errors.goToSettings')}
+                      </button>
+                    ) : (
+                      <button onClick={() => setError(null)} className="text-sm underline hover:text-white">
+                        {t('docstringGenerator.tryAgain')}
+                      </button>
+                    )}
+                  </div>
+                </div>
+              );
+            })()}
             
             {result && (
                <div className="p-0 h-full flex flex-col">

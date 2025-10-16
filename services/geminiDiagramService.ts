@@ -1,11 +1,12 @@
 import { GoogleGenAI } from '@google/genai';
-import { isGeminiConfigured } from './configService';
+import { getApiKeys, isGeminiConfigured } from './configService';
 
 export async function generateDiagramCode(rawInput: string, language: 'en' | 'vi'): Promise<string> {
   if (!isGeminiConfigured()) {
-    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
+    throw new Error("Gemini API key is not configured. Please set it in the settings (⚙️ icon).");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const { geminiApiKey } = getApiKeys();
+  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
   const systemInstruction = language === 'vi' 
   // FIX: Escaped backticks in the template literal to prevent a syntax error.

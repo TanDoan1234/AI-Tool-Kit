@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { isGeminiConfigured } from './configService';
+import { getApiKeys, isGeminiConfigured } from './configService';
 
 const sqlSchema = {
   type: Type.OBJECT,
@@ -18,9 +18,10 @@ const sqlSchema = {
 
 export async function generateSqlQuery(schema: string, instruction: string, language: 'en' | 'vi'): Promise<{ language: string; query: string; }> {
   if (!isGeminiConfigured()) {
-    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
+    throw new Error("Gemini API key is not configured. Please set it in the settings (⚙️ icon).");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const { geminiApiKey } = getApiKeys();
+  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
   const systemInstruction = language === 'vi' 
   ? `Bạn là một chuyên gia SQL.

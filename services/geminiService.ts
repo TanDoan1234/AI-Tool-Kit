@@ -1,7 +1,6 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import type { FormDefinition } from '../types';
-// FIX: Per guidelines, getApiKeys is no longer needed for the Gemini key.
-import { isGeminiConfigured } from './configService';
+import { getApiKeys, isGeminiConfigured } from './configService';
 
 
 const formSchema = {
@@ -83,11 +82,10 @@ const formSchema = {
 
 export async function generateFormDefinition(rawInput: string, language: 'en' | 'vi', quizOptions?: { isQuiz: boolean; defaultPoints?: number }): Promise<FormDefinition> {
   if (!isGeminiConfigured()) {
-    // FIX: Updated error message to reflect API key sourcing from environment variables per guidelines.
-    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
+    throw new Error("Gemini API key is not configured. Please set it in the settings (⚙️ icon).");
   }
-  // FIX: Per coding guidelines, initialize GoogleGenAI with API key directly from process.env.API_KEY.
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const { geminiApiKey } = getApiKeys();
+  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
   const isQuizEnabled = quizOptions?.isQuiz ?? false;
   const defaultPoints = quizOptions?.defaultPoints ?? 10;

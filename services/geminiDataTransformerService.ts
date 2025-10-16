@@ -1,5 +1,5 @@
 import { GoogleGenAI, Type } from '@google/genai';
-import { isGeminiConfigured } from './configService';
+import { getApiKeys, isGeminiConfigured } from './configService';
 
 const transformerSchema = {
   type: Type.OBJECT,
@@ -19,9 +19,10 @@ const transformerSchema = {
 
 export async function transformData(inputData: string, instruction: string, language: 'en' | 'vi'): Promise<{ format: string; data: string; }> {
   if (!isGeminiConfigured()) {
-    throw new Error("Gemini API key is not configured. It must be provided via the API_KEY environment variable.");
+    throw new Error("Gemini API key is not configured. Please set it in the settings (⚙️ icon).");
   }
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const { geminiApiKey } = getApiKeys();
+  const ai = new GoogleGenAI({ apiKey: geminiApiKey });
 
   const systemInstruction = language === 'vi' 
   ? `Bạn là một công cụ chuyển đổi dữ liệu chuyên nghiệp.
