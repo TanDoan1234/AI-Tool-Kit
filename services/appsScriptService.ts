@@ -14,10 +14,11 @@ function scriptString(str: string | undefined | null): string {
  * Generates a Google Apps Script code string from a FormDefinition object.
  * This script can be run in the Google Apps Script editor to create a Google Form.
  * @param definition The form definition object.
+ * @param language The current language to use for instructional comments.
  * @returns A string containing the complete Google Apps Script code.
  */
-export function generateAppsScriptCode(definition: FormDefinition): string {
-    let code = `/**
+export function generateAppsScriptCode(definition: FormDefinition, language: 'en' | 'vi'): string {
+    const instructionsEN = `/**
  * This Google Apps Script will create a new Google Form based on your specifications.
  * To use it:
  * 1. Open a Google Sheet or Google Docs.
@@ -27,7 +28,23 @@ export function generateAppsScriptCode(definition: FormDefinition): string {
  * 5. From the function dropdown, select "createGoogleFormFromAI" and click "Run".
  * 6. You will be asked to grant permissions. Follow the prompts to allow the script to run.
  * 7. A new Google Form will be created in your Google Drive.
- */
+ */`;
+
+    const instructionsVI = `/**
+ * Tập lệnh Google Apps Script này sẽ tạo một Google Form mới dựa trên thông số kỹ thuật của bạn.
+ * Cách sử dụng:
+ * 1. Mở một Google Sheet hoặc Google Docs mới.
+ * 2. Đi tới Tiện ích mở rộng > Apps Script.
+ * 3. Dán toàn bộ mã này vào trình chỉnh sửa, thay thế mọi mã hiện có.
+ * 4. Nhấp vào biểu tượng "Lưu dự án".
+ * 5. Từ menu thả xuống của hàm, chọn "createGoogleFormFromAI" và nhấp vào "Chạy".
+ * 6. Bạn sẽ được yêu cầu cấp quyền. Làm theo lời nhắc để cho phép tập lệnh chạy.
+ * 7. Một Google Form mới sẽ được tạo trong Google Drive của bạn.
+ */`;
+
+    const instructions = language === 'vi' ? instructionsVI : instructionsEN;
+
+    let code = `${instructions}
 function createGoogleFormFromAI() {
   // Create the form with the main title and description
   var form = FormApp.create(${scriptString(definition.title)});

@@ -15,7 +15,19 @@ interface FormGeneratorAppProps {
   onSignIn: () => void;
 }
 
-const MARKDOWN_EXAMPLE = `# Event Registration
+type ActiveTab = 'preview' | 'google-form' | 'apps-script';
+
+export default function FormGeneratorApp({
+  isGoogleReady,
+  isSignedIn,
+  isGoogleConfigAvailable,
+  onSignIn
+}: FormGeneratorAppProps) {
+  const { t, language } = useLanguage();
+
+  const examples = {
+    en: {
+      markdown: `# Event Registration
 Sign up for our annual tech conference!
 
 ## Personal Information
@@ -33,9 +45,8 @@ What's your t-shirt size? (Multiple Choice)
 
 ## Dietary Restrictions
 Please list any dietary restrictions. (Paragraph)
-`;
-
-const JSON_EXAMPLE = `{
+`,
+      json: `{
   "requests": [
     {
       "createItem": {
@@ -61,9 +72,8 @@ const JSON_EXAMPLE = `{
       }
     }
   ]
-}`;
-
-const HTML_EXAMPLE = `<form>
+}`,
+      html: `<form>
   <h1>Website Feedback</h1>
   <p>Help us improve by answering a few questions.</p>
   
@@ -79,17 +89,76 @@ const HTML_EXAMPLE = `<form>
   <label for="comments">Any other suggestions?</label>
   <textarea id="comments" rows="5"></textarea>
 </form>
-`;
+`
+    },
+    vi: {
+      markdown: `# Đăng ký sự kiện
+Đăng ký tham gia hội nghị công nghệ hàng năm của chúng tôi!
 
-type ActiveTab = 'preview' | 'google-form' | 'apps-script';
+## Thông tin cá nhân
+* Họ và tên (Trả lời ngắn, bắt buộc)
+* Địa chỉ Email (Trả lời ngắn, bắt buộc)
 
-export default function FormGeneratorApp({
-  isGoogleReady,
-  isSignedIn,
-  isGoogleConfigAvailable,
-  onSignIn
-}: FormGeneratorAppProps) {
-  const { t, language } = useLanguage();
+## Cỡ áo
+Cỡ áo của bạn là gì? (Trắc nghiệm)
+- Nhỏ (S)
+- Vừa (M)
+- Lớn (L)
+- Rất lớn (XL)
+
+![Hình áo thun](https://via.placeholder.com/400x200.png/94a3e9/ffffff?text=Ao+Thun+Dep)
+
+## Yêu cầu về ăn uống
+Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đoạn văn)
+`,
+      json: `{
+  "requests": [
+    {
+      "createItem": {
+        "item": {
+          "title": "Tên của bạn",
+          "questionItem": { "question": { "required": true, "textQuestion": {} } }
+        }
+      }
+    },
+    {
+      "createItem": {
+        "item": {
+          "title": "Lĩnh vực phát triển chính của bạn là gì?",
+          "questionItem": {
+            "question": {
+              "choiceQuestion": {
+                "type": "RADIO",
+                "options": [{ "value": "Giao diện người dùng (Frontend)" }, { "value": "Hệ thống (Backend)" }, { "value": "Di động (Mobile)" }, { "value": "Vận hành (DevOps)" }]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}`,
+      html: `<form>
+  <h1>Phản hồi về trang web</h1>
+  <p>Giúp chúng tôi cải thiện bằng cách trả lời một vài câu hỏi.</p>
+  
+  <label for="email">Email của bạn:</label>
+  <input type="email" id="email" name="email" required>
+  
+  <p>Bạn sử dụng những tính năng nào? (Chọn tất cả các mục phù hợp)</p>
+  <input type="checkbox" id="feature1" value="Bảng điều khiển">
+  <label for="feature1">Bảng điều khiển</label><br>
+  <input type="checkbox" id="feature2" value="Phân tích">
+  <label for="feature2">Phân tích</label><br>
+  
+  <label for="comments">Bạn có đề xuất nào khác không?</label>
+  <textarea id="comments" rows="5"></textarea>
+</form>
+`
+    }
+  };
+
+  const currentExamples = examples[language];
   const [view, setView] = useState<'editor' | 'guide'>('editor');
   const [userInput, setUserInput] = useState('');
   const [formDefinition, setFormDefinition] = useState<FormDefinition | null>(null);
@@ -103,13 +172,13 @@ export default function FormGeneratorApp({
 
   useEffect(() => {
     if (formDefinition) {
-      const script = generateAppsScriptCode(formDefinition);
+      const script = generateAppsScriptCode(formDefinition, language);
       setGeneratedScript(script);
     } else {
       setGeneratedScript('');
     }
     setFormUrl(null);
-  }, [formDefinition]);
+  }, [formDefinition, language]);
 
   const handleGenerate = async () => {
     if (!userInput.trim()) return;
@@ -186,13 +255,13 @@ export default function FormGeneratorApp({
              <div className="mt-4">
                 <p className="text-sm text-gray-400 mb-2">{t('formGenerator.tryExample.title')}</p>
                 <div className="flex flex-wrap gap-2">
-                    <button onClick={() => setUserInput(MARKDOWN_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                    <button onClick={() => setUserInput(currentExamples.markdown)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
                         {t('formGenerator.tryExample.markdown')}
                     </button>
-                    <button onClick={() => setUserInput(JSON_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                    <button onClick={() => setUserInput(currentExamples.json)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
                         {t('formGenerator.tryExample.json')}
                     </button>
-                    <button onClick={() => setUserInput(HTML_EXAMPLE)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
+                    <button onClick={() => setUserInput(currentExamples.html)} className="text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-full px-3 py-1 transition-colors">
                         {t('formGenerator.tryExample.html')}
                     </button>
                 </div>
