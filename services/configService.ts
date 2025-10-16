@@ -1,3 +1,21 @@
+// FIX: Manually define types for import.meta.env to resolve TypeScript errors
+// in environments where "vite/client" types are not automatically included.
+// This removes the need for a triple-slash directive that was causing a file-not-found error.
+interface ImportMetaEnv {
+  readonly VITE_GEMINI_API_KEY: string;
+  readonly VITE_GOOGLE_API_KEY: string;
+  readonly VITE_GOOGLE_CLIENT_ID: string;
+}
+
+// FIX: Correctly augment the global `ImportMeta` type to include `env` for Vite environment variables.
+// This is done by wrapping the `ImportMeta` interface declaration in a `declare global` block,
+// which is necessary because this file is a module.
+declare global {
+  interface ImportMeta {
+    readonly env: ImportMetaEnv;
+  }
+}
+
 export interface ApiKeys {
   geminiApiKey: string;
   googleApiKey: string;
@@ -8,15 +26,20 @@ const STORAGE_KEY = 'ai-form-generator-apikeys';
 
 /**
  * Retrieves API keys from localStorage, with environment variables as a fallback.
+ * Vite uses `import.meta.env` to expose environment variables.
  */
 export function getApiKeys(): ApiKeys {
   const storedKeys = localStorage.getItem(STORAGE_KEY);
   const parsedKeys = storedKeys ? JSON.parse(storedKeys) : {};
   
+  // FIX: Safely access Vite environment variables. The 'import.meta.env' object 
+  // is injected by Vite and may be undefined in other environments.
+  const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : {};
+
   return {
-    geminiApiKey: parsedKeys.geminiApiKey || process.env.API_KEY || '',
-    googleApiKey: parsedKeys.googleApiKey || process.env.GOOGLE_API_KEY || '',
-    googleClientId: parsedKeys.googleClientId || process.env.GOOGLE_CLIENT_ID || '',
+    geminiApiKey: parsedKeys.geminiApiKey || env.VITE_GEMINI_API_KEY || '',
+    googleApiKey: parsedKeys.googleApiKey || env.VITE_GOOGLE_API_KEY || '',
+    googleClientId: parsedKeys.googleClientId || env.VITE_GOOGLE_CLIENT_ID || '',
   };
 }
 
