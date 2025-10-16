@@ -176,6 +176,11 @@ const en = {
     },
     guideButton: 'How-to Guide',
     googleConfigWarning: 'Google integration is not configured. Creating forms directly is disabled. Please check the settings.',
+    advancedOptions: {
+      title: "Advanced Options",
+      createSheetLabel: "Create a linked Google Sheet for responses",
+      appsScriptOnlyNote: "(This option only applies when using the generated code in the 'Apps Script' tab)"
+    }
   },
   diagramGenerator: {
     title: 'AI Diagram Generator',
@@ -443,6 +448,11 @@ const vi: typeof en = {
     },
     guideButton: 'Hướng dẫn',
     googleConfigWarning: 'Tích hợp Google chưa được cấu hình. Chức năng tạo biểu mẫu trực tiếp bị vô hiệu hóa. Vui lòng kiểm tra cài đặt.',
+    advancedOptions: {
+      title: "Tùy chọn Nâng cao",
+      createSheetLabel: "Tạo và liên kết một Google Sheet cho các câu trả lời",
+      appsScriptOnlyNote: "(Tùy chọn này chỉ áp dụng khi sử dụng mã được tạo trong tab 'Apps Script')"
+    }
   },
   diagramGenerator: {
     title: 'Trình tạo sơ đồ AI',

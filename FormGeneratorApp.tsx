@@ -169,16 +169,18 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
   const [formUrl, setFormUrl] = useState<string | null>(null);
   const [isCreatingForm, setIsCreatingForm] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
+  const [shouldCreateSheet, setShouldCreateSheet] = useState(false);
+
 
   useEffect(() => {
     if (formDefinition) {
-      const script = generateAppsScriptCode(formDefinition, language);
+      const script = generateAppsScriptCode(formDefinition, language, { shouldCreateSheet });
       setGeneratedScript(script);
     } else {
       setGeneratedScript('');
     }
     setFormUrl(null);
-  }, [formDefinition, language]);
+  }, [formDefinition, language, shouldCreateSheet]);
 
   const handleGenerate = async () => {
     if (!userInput.trim()) return;
@@ -266,10 +268,30 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
                     </button>
                 </div>
             </div>
+            <div className="my-4 p-4 border border-gray-700 rounded-lg w-full text-left bg-gray-800/50">
+                <h4 className="font-semibold text-white mb-3">{t('formGenerator.advancedOptions.title')}</h4>
+                <div className="flex items-start">
+                    <input
+                        id="createSheet"
+                        type="checkbox"
+                        checked={shouldCreateSheet}
+                        onChange={(e) => setShouldCreateSheet(e.target.checked)}
+                        className="h-4 w-4 rounded border-gray-500 text-violet-600 focus:ring-violet-500 bg-gray-700 mt-1"
+                    />
+                    <div className="ml-3 text-sm">
+                        <label htmlFor="createSheet" className="font-medium text-gray-300 cursor-pointer">
+                            {t('formGenerator.advancedOptions.createSheetLabel')}
+                        </label>
+                        <p className="text-gray-500 text-xs mt-1">
+                            {t('formGenerator.advancedOptions.appsScriptOnlyNote')}
+                        </p>
+                    </div>
+                </div>
+            </div>
             <button
               onClick={handleGenerate}
               disabled={isLoading}
-              className="mt-4 w-full py-3 px-4 bg-violet-600 text-white font-semibold rounded-md shadow-md hover:bg-violet-700 disabled:bg-violet-800 disabled:cursor-not-allowed transition-colors"
+              className="w-full py-3 px-4 bg-violet-600 text-white font-semibold rounded-md shadow-md hover:bg-violet-700 disabled:bg-violet-800 disabled:cursor-not-allowed transition-colors"
             >
               {isLoading ? t('formGenerator.generatingButton') : t('formGenerator.generateButton')}
             </button>
@@ -313,15 +335,17 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
                   {activeTab === 'google-form' && (
                     <div className="p-6 text-center flex flex-col items-center justify-center h-full">
                         <GoogleIcon className="w-12 h-12 mb-4" />
-                        <h3 className="text-xl font-bold text-white mb-4">Create your form instantly</h3>
+                        <h3 className="text-xl font-bold text-white mb-2">Create your form instantly</h3>
+                        
+
                          {!isGoogleConfigAvailable ? (
-                             <p className="max-w-md text-yellow-400 bg-yellow-900/30 p-3 rounded-md">
+                             <p className="max-w-md text-yellow-400 bg-yellow-900/30 p-3 rounded-md mt-2">
                                 {t('formGenerator.googleConfigWarning')}
                             </p>
                          ) : (
                             <>
                                 {formUrl ? (
-                                    <div className="p-4 bg-green-900/50 border border-green-700 text-green-300 rounded-md">
+                                    <div className="p-4 bg-green-900/50 border border-green-700 text-green-300 rounded-md mt-2">
                                         <p className="font-bold">{t('formGenerator.formCreatedSuccess')}</p>
                                         <a href={formUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
                                             {t('formGenerator.viewForm')}
@@ -331,7 +355,7 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
                                      <button
                                         onClick={handleCreateGoogleForm}
                                         disabled={isCreatingForm || !isGoogleReady}
-                                        className="inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-800 bg-white hover:bg-gray-200 disabled:bg-gray-400 disabled:cursor-wait transition-colors"
+                                        className="mt-2 inline-flex items-center gap-2 px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-gray-800 bg-white hover:bg-gray-200 disabled:bg-gray-400 disabled:cursor-wait transition-colors"
                                     >
                                         <GoogleIcon className="w-5 h-5" />
                                         {isCreatingForm 

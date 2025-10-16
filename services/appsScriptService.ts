@@ -10,14 +10,19 @@ function scriptString(str: string | undefined | null): string {
     return JSON.stringify(str);
 }
 
+interface AppsScriptOptions {
+  shouldCreateSheet: boolean;
+}
+
 /**
  * Generates a Google Apps Script code string from a FormDefinition object.
  * This script can be run in the Google Apps Script editor to create a Google Form.
  * @param definition The form definition object.
  * @param language The current language to use for instructional comments.
+ * @param options Additional options for script generation.
  * @returns A string containing the complete Google Apps Script code.
  */
-export function generateAppsScriptCode(definition: FormDefinition, language: 'en' | 'vi'): string {
+export function generateAppsScriptCode(definition: FormDefinition, language: 'en' | 'vi', options: AppsScriptOptions): string {
     const instructionsEN = `/**
  * This Google Apps Script will create a new Google Form based on your specifications.
  * To use it:
@@ -49,8 +54,17 @@ function createGoogleFormFromAI() {
   // Create the form with the main title and description
   var form = FormApp.create(${scriptString(definition.title)});
   form.setDescription(${scriptString(definition.description)});
-
 `;
+
+    if (options.shouldCreateSheet) {
+        code += `
+  // Create and link a new Google Sheet to store responses
+  var ss = SpreadsheetApp.create("Responses for " + ${scriptString(definition.title)});
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+  Logger.log('Linked spreadsheet created: ' + ss.getUrl());
+`;
+    }
+
 
     definition.sections.forEach((section, sectionIndex) => {
         code += `\n  // --- Questions for Section: ${scriptString(section.title)} ---\n`;
