@@ -12,6 +12,8 @@ export interface Question {
   options?: string[];
   imageUrl?: string;
   required?: boolean;
+  points?: number;
+  correctAnswers?: string[];
 }
 
 export interface FormSection {
@@ -21,7 +23,8 @@ export interface FormSection {
 }
 
 export interface FormDefinition {
-  title: string;
+  title:string;
   description: string;
   sections: FormSection[];
+  isQuiz?: boolean;
 }

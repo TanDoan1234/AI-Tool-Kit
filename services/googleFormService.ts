@@ -136,8 +136,19 @@ function mapQuestionToGoogleFormItem(question: Question) {
     },
   };
 
+  // Handle quiz grading for questions with points
+  if (question.points && question.points > 0) {
+    item.questionItem.question.grading = {
+      pointValue: question.points,
+      correctAnswers: {
+        answers: (question.correctAnswers || []).map(ans => ({ value: ans }))
+      }
+    };
+  }
+
+
   if (question.imageUrl && question.type !== QuestionType.IMAGE_DISPLAY) {
-    item.questionItem.question.grading = undefined; // Ensure grading is not set
+    // Ensure grading is not applied to the image itself, but to the question
     item.questionItem.image = {
         sourceUri: question.imageUrl,
         properties: { alignment: 'CENTER' }
@@ -206,6 +217,21 @@ export async function createGoogleForm(definition: FormDefinition): Promise<stri
         updateMask: 'description',
       },
     }];
+    
+    // If it's a quiz, add a request to update the form's settings
+    if (definition.isQuiz) {
+        requests.push({
+            updateSettings: {
+                settings: {
+                    quizSettings: {
+                        isQuiz: true
+                    }
+                },
+                updateMask: 'quizSettings.isQuiz'
+            }
+        });
+    }
+
 
     let currentIndex = 0;
     definition.sections.forEach((section, sectionIndex) => {

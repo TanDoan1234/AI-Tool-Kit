@@ -15,6 +15,10 @@ const formSchema = {
       type: Type.STRING,
       description: "A brief description or introduction for the form, extracted from the user's input.",
     },
+    isQuiz: {
+      type: Type.BOOLEAN,
+      description: "Set to true if the input suggests this is a quiz, test, or assessment."
+    },
     sections: {
       type: Type.ARRAY,
       description: "An array of form sections. Each section represents a page in the form.",
@@ -45,7 +49,7 @@ const formSchema = {
                 },
                 options: {
                   type: Type.ARRAY,
-                  description: "An array of string options for MULTIPLE_CHOICE or CHECKBOXES questions. Should be an empty array for other types.",
+                  description: "An array of string options for MULTIPLE_CHOICE or CHECKBOXES questions. The correct answer marker (*) should be removed from the option text.",
                   items: {
                     type: Type.STRING,
                   },
@@ -57,6 +61,17 @@ const formSchema = {
                 required: {
                   type: Type.BOOLEAN,
                   description: "Whether the question is mandatory. Infer this if the input mentions 'required', '*', etc."
+                },
+                points: {
+                    type: Type.INTEGER,
+                    description: "The point value for this question if it's part of a quiz. Omit or set to 0 if not a quiz question."
+                },
+                correctAnswers: {
+                    type: Type.ARRAY,
+                    description: "An array of strings containing the correct answer(s) for the question. For choice-based questions, this should match the text of the correct option(s).",
+                    items: {
+                        type: Type.STRING,
+                    },
                 }
               },
               required: ["title", "type"],
@@ -79,36 +94,24 @@ export async function generateFormDefinition(rawInput: string, language: 'en' | 
   const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
   const systemInstruction = language === 'vi' 
-  ? `Bạn là một chuyên gia tạo biểu mẫu. Hãy phân tích nội dung sau và chuyển nó thành một đối tượng JSON có cấu trúc đại diện cho một Google Form.
-    1. Từ văn bản không cấu trúc (như Markdown hoặc HTML), hãy trích xuất tiêu đề chính và mô tả cho biểu mẫu.
-    2. Nhóm các câu hỏi liên quan một cách hợp lý vào các phần riêng biệt. Mỗi phần sẽ trở thành một trang riêng trong biểu mẫu.
-    3. Cung cấp một tiêu đề ngắn, mô tả cho mỗi phần.
-    4. Đối với mỗi câu hỏi, xác định văn bản và loại câu hỏi phù hợp nhất (SHORT_ANSWER, PARAGRAPH, MULTIPLE_CHOICE, CHECKBOXES, IMAGE_DISPLAY).
-    5. Trích xuất các tùy chọn cho câu hỏi MULTIPLE_CHOICE và CHECKBOXES.
-    6. Xác định các URL hình ảnh và liên kết chúng với câu hỏi có liên quan.
-    7. Xác định xem một câu hỏi có bắt buộc hay không.
-    8. Ngoài ra, nếu đầu vào là một đối tượng JSON khớp với cấu trúc \`batchUpdate\` của Google Forms API (tức là có một mảng 'requests' với các đối tượng 'createItem'), bạn phải phân tích cấu trúc này và chuyển đổi nó sang schema mục tiêu. Đối với mỗi 'item' trong requests:
-        - Trích xuất tiêu đề câu hỏi từ \`item.title\`.
-        - Xác định loại câu hỏi bằng cách xem \`item.questionItem.question\`. Một \`choiceQuestion\` với loại 'RADIO' sẽ ánh xạ tới 'MULTIPLE_CHOICE', và 'CHECKBOX' sẽ ánh xạ tới 'CHECKBOXES'. Một \`textQuestion\` với \`paragraph: true\` sẽ ánh xạ tới 'PARAGRAPH', nếu không thì là 'SHORT_ANSWER'.
-        - Trích xuất các tùy chọn cho câu hỏi lựa chọn từ \`item.questionItem.question.choiceQuestion.options\`, lấy 'value' từ mỗi đối tượng tùy chọn.
-        - Trích xuất trạng thái \`required\` từ \`item.questionItem.question.required\`.
-        - Nhóm tất cả các câu hỏi đã trích xuất vào một phần duy nhất. Bạn nên tự nghĩ ra một tiêu đề phù hợp cho phần này và một tiêu đề chính cùng mô tả cho toàn bộ biểu mẫu dựa trên nội dung của các câu hỏi.
-    9. Chỉ trả về một đối tượng JSON hợp lệ duy nhất khớp với schema đã cung cấp.`
-  : `You are an expert form generator. Analyze the following content and convert it into a structured JSON object that represents a multi-page Google Form.
-    1. From unstructured text (like Markdown or HTML), extract the main title and a description for the form.
-    2. Logically group related questions into distinct sections. Each section will become a separate page in the form.
-    3. Provide a short, descriptive title for each section.
-    4. For each question, identify its text and determine the most appropriate question type (SHORT_ANSWER, PARAGRAPH, MULTIPLE_CHOICE, CHECKBOXES, IMAGE_DISPLAY).
-    5. Extract the options for MULTIPLE_CHOICE and CHECKBOXES questions.
-    6. Identify any image URLs and associate them with the relevant question.
-    7. Determine if a question is required.
-    8. Alternatively, if the input is a JSON object matching the Google Forms API \`batchUpdate\` structure (i.e., it has a 'requests' array with 'createItem' objects), you must parse this structure and transform it into the target schema. For each 'item' in the requests:
-        - Extract the question title from \`item.title\`.
-        - Determine the question type by looking at \`item.questionItem.question\`. A \`choiceQuestion\` with type 'RADIO' maps to 'MULTIPLE_CHOICE', and 'CHECKBOX' maps to 'CHECKBOXES'. A \`textQuestion\` with \`paragraph: true\` maps to 'PARAGRAPH', otherwise it's 'SHORT_ANSWER'.
-        - Extract options for choice questions from \`item.questionItem.question.choiceQuestion.options\`, taking the 'value' from each option object.
-        - Extract the \`required\` status from \`item.questionItem.question.required\`.
-        - Group all extracted questions into a single section. You should invent a suitable title for this section and a main title and description for the entire form based on the questions' content.
-    9. Return a single, valid JSON object matching the provided schema.`;
+  ? `Bạn là một chuyên gia tạo biểu mẫu và bài kiểm tra. Hãy phân tích nội dung sau và chuyển nó thành một đối tượng JSON có cấu trúc.
+    1. Trích xuất tiêu đề chính và mô tả.
+    2. Nhóm câu hỏi vào các phần hợp lý.
+    3. Đối với mỗi câu hỏi, xác định văn bản, loại, và trạng thái bắt buộc.
+    4. **QUAN TRỌNG (QUIZ):** Nếu nội dung gợi ý đây là một bài kiểm tra (ví dụ: có điểm, có đáp án đúng), hãy đặt \`isQuiz: true\` ở cấp độ cao nhất.
+    5. **ĐÁP ÁN ĐÚNG:** Đối với câu hỏi trắc nghiệm hoặc hộp kiểm, nếu một lựa chọn kết thúc bằng dấu hoa thị (*), đó là câu trả lời đúng. Hãy thêm văn bản của lựa chọn đó (không có dấu *) vào mảng \`correctAnswers\` cho câu hỏi đó.
+    6. **ĐIỂM SỐ:** Nếu một câu hỏi có đáp án đúng, hãy gán cho nó một số điểm (ví dụ: 10 điểm) vào trường \`points\`. Nếu người dùng chỉ định một số điểm mặc định, hãy sử dụng số điểm đó.
+    7. **GOOGLE FORMS API JSON:** Nếu đầu vào là JSON từ API Google Forms, hãy phân tích nó và chuyển đổi sang schema mục tiêu.
+    8. Chỉ trả về một đối tượng JSON hợp lệ duy nhất khớp với schema đã cung cấp.`
+  : `You are an expert form and quiz generator. Analyze the following content and convert it into a structured JSON object.
+    1. Extract the main title and description.
+    2. Group questions into logical sections.
+    3. For each question, identify its text, type, and required status.
+    4. **CRITICAL (QUIZ):** If the content suggests it is a quiz (e.g., has points, correct answers), set \`isQuiz: true\` at the top level.
+    5. **CORRECT ANSWERS:** For multiple choice or checkbox questions, if an option ends with an asterisk (*), it is the correct answer. Add the option's text (without the *) to the \`correctAnswers\` array for that question.
+    6. **POINTS:** If a question has a correct answer, assign it a point value (e.g., 10) in the \`points\` field. If the user specifies a default point value, use that instead.
+    7. **GOOGLE FORMS API JSON:** If the input is a JSON from the Google Forms API, parse it and transform it into the target schema.
+    8. Return a single, valid JSON object matching the provided schema.`;
 
   const prompt = `
     Here is the content to analyze:

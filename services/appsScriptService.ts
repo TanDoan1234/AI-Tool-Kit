@@ -56,6 +56,13 @@ function createGoogleFormFromAI() {
   form.setDescription(${scriptString(definition.description)});
 `;
 
+    if (definition.isQuiz) {
+        code += `
+  // This is a quiz, so update the form settings accordingly.
+  form.setIsQuiz(true);
+`;
+    }
+
     if (options.shouldCreateSheet) {
         code += `
   // Create and link a new Google Sheet to store responses
@@ -75,26 +82,33 @@ function createGoogleFormFromAI() {
             code += `\n  // Question: ${question.title.replace(/\n/g, ' ')}\n`;
             
             let itemCreationCode = '';
+            let specificItemType = '';
 
             switch (question.type) {
                 case QuestionType.SHORT_ANSWER:
                     itemCreationCode = `form.addTextItem()`;
+                    specificItemType = 'asTextItem()';
                     break;
                 case QuestionType.PARAGRAPH:
                     itemCreationCode = `form.addParagraphTextItem()`;
+                    specificItemType = 'asParagraphTextItem()';
                     break;
                 case QuestionType.MULTIPLE_CHOICE:
                     itemCreationCode = `form.addMultipleChoiceItem()`;
+                    specificItemType = 'asMultipleChoiceItem()';
                     break;
                 case QuestionType.CHECKBOXES:
                     itemCreationCode = `form.addCheckboxItem()`;
+                    specificItemType = 'asCheckboxItem()';
                     break;
                 case QuestionType.IMAGE_DISPLAY:
                     itemCreationCode = `form.addImageItem()`;
+                    specificItemType = 'asImageItem()';
                     break;
                 default:
                     // Fallback to a standard text item for any unknown types
                     itemCreationCode = `form.addTextItem()`;
+                    specificItemType = 'asTextItem()';
             }
 
             code += `  var ${itemVar} = ${itemCreationCode};\n`;
@@ -103,11 +117,21 @@ function createGoogleFormFromAI() {
             if (question.required) {
                 code += `  ${itemVar}.setRequired(true);\n`;
             }
+            
+            if (definition.isQuiz && question.points && question.points > 0) {
+                 if (specificItemType !== 'asImageItem()') {
+                    code += `  ${itemVar}.${specificItemType}.setPoints(${question.points});\n`;
+                 }
+            }
 
-            // For choice-based questions, add the options
+
+            // For choice-based questions, add the options and set correct answers
             if ((question.type === QuestionType.MULTIPLE_CHOICE || question.type === QuestionType.CHECKBOXES) && question.options) {
-                const choices = question.options.map(opt => `${itemVar}.createChoice(${scriptString(opt)})`).join(',\n    ');
-                code += `  ${itemVar}.setChoices([\n    ${choices}\n  ]);\n`;
+                const choices = question.options.map(opt => {
+                    const isCorrect = (question.correctAnswers || []).includes(opt);
+                    return `${itemVar}.${specificItemType}.createChoice(${scriptString(opt)}, ${isCorrect})`
+                }).join(',\n    ');
+                code += `  ${itemVar}.${specificItemType}.setChoices([\n    ${choices}\n  ]);\n`;
             }
             
             // Handle images. For IMAGE_DISPLAY, it's the main content. For others, it's an attachment.
@@ -119,7 +143,9 @@ function createGoogleFormFromAI() {
                  code += `  } catch (e) {\n`;
                  code += `    Logger.log('Could not fetch image for question "' + ${scriptString(question.title)} + '": ' + e.message);\n`;
                  code += `    // If image fails to load, add a help text note.\n`;
-                 code += `    ${itemVar}.setHelpText('Error: Could not load image from ' + imageUrl);\n`;
+                 if (specificItemType !== 'asImageItem()') {
+                    code += `    ${itemVar}.setHelpText('Error: Could not load image from ' + imageUrl);\n`;
+                 }
                  code += `  }\n`;
             }
         });

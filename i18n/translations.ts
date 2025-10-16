@@ -180,6 +180,13 @@ const en = {
       title: "Advanced Options",
       createSheetLabel: "Create a linked Google Sheet for responses",
       appsScriptOnlyNote: "(This option only applies when using the generated code in the 'Apps Script' tab)"
+    },
+    quiz: {
+        title: "Quiz Options",
+        makeQuizLabel: "Make this a quiz",
+        makeQuizNote: "Mark correct answers in your input with a trailing asterisk (*).",
+        defaultPointsLabel: "Default points per question",
+        points: "points"
     }
   },
   diagramGenerator: {
@@ -452,6 +459,13 @@ const vi: typeof en = {
       title: "Tùy chọn Nâng cao",
       createSheetLabel: "Tạo và liên kết một Google Sheet cho các câu trả lời",
       appsScriptOnlyNote: "(Tùy chọn này chỉ áp dụng khi sử dụng mã được tạo trong tab 'Apps Script')"
+    },
+    quiz: {
+        title: "Tùy chọn Bài kiểm tra",
+        makeQuizLabel: "Tạo bài kiểm tra",
+        makeQuizNote: "Đánh dấu câu trả lời đúng trong đầu vào của bạn bằng một dấu hoa thị (*).",
+        defaultPointsLabel: "Số điểm mặc định cho mỗi câu hỏi",
+        points: "điểm"
     }
   },
   diagramGenerator: {
@@ -482,7 +496,7 @@ const vi: typeof en = {
     error: 'Lỗi',
     tryAgain: 'Thử lại',
     tryExample: {
-      title: 'Hoặc thử một ví dụ:',
+      title: 'Or try an example:',
       python: 'Hàm Python',
       javascript: 'Hàm JavaScript',
     },

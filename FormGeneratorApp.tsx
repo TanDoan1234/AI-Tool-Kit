@@ -25,7 +25,7 @@ export default function FormGeneratorApp({
 }: FormGeneratorAppProps) {
   const { t, language } = useLanguage();
 
-  const examples = {
+  const formExamples = {
     en: {
       markdown: `# Event Registration
 Sign up for our annual tech conference!
@@ -158,7 +158,121 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
     }
   };
 
-  const currentExamples = examples[language];
+  const quizExamples = {
+    en: {
+      markdown: `# Vietnam History Quiz
+Test your knowledge of Vietnamese history.
+
+## Multiple Choice Questions
+What was the ancient name of Hanoi? (Multiple Choice, required)
+- Gia Định
+- Thăng Long*
+- Phú Xuân
+
+Which dynasty unified Vietnam in the 11th century? (Multiple Choice)
+- Trần Dynasty
+- Lê Dynasty
+- Lý Dynasty*
+
+## Checkbox Questions
+Which of the following cities have been capitals of Vietnam at some point in history? (Checkboxes, required)
+- Huế*
+- Sài Gòn
+- Hoa Lư*
+- Đà Nẵng
+`,
+      json: `{
+  "title": "Basic Math Quiz",
+  "isQuiz": true,
+  "sections": [{
+    "title": "Arithmetic",
+    "questions": [
+      {
+        "title": "What is 2 + 2?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["3", "4*", "5"],
+        "required": true
+      },
+      {
+        "title": "Which numbers are even?",
+        "type": "CHECKBOXES",
+        "options": ["1", "2*", "3", "4*"]
+      }
+    ]
+  }]
+}`,
+      html: `<form>
+  <h1>Capital Cities Quiz</h1>
+  <p>What is the capital of France? (required)</p>
+  <input type="radio" name="q1"> London<br>
+  <input type="radio" name="q1"> Berlin<br>
+  <input type="radio" name="q1"> Paris*<br>
+  
+  <p>Which of these are countries in Asia?</p>
+  <input type="checkbox"> Japan*<br>
+  <input type="checkbox"> Brazil<br>
+  <input type="checkbox"> Vietnam*<br>
+</form>
+`
+    },
+    vi: {
+      markdown: `# Trắc nghiệm Lịch sử Việt Nam
+Kiểm tra kiến thức của bạn về lịch sử Việt Nam.
+
+## Câu hỏi trắc nghiệm
+Tên gọi xưa của Hà Nội là gì? (Trắc nghiệm, bắt buộc)
+- Gia Định
+- Thăng Long*
+- Phú Xuân
+
+Triều đại nào đã thống nhất Việt Nam vào thế kỷ 11? (Trắc nghiệm)
+- Nhà Trần
+- Nhà Lê
+- Nhà Lý*
+
+## Câu hỏi hộp kiểm
+Thành phố nào sau đây đã từng là thủ đô của Việt Nam trong lịch sử? (Hộp kiểm, bắt buộc)
+- Huế*
+- Sài Gòn
+- Hoa Lư*
+- Đà Nẵng
+`,
+      json: `{
+  "title": "Bài kiểm tra Toán cơ bản",
+  "isQuiz": true,
+  "sections": [{
+    "title": "Số học",
+    "questions": [
+      {
+        "title": "2 + 2 bằng mấy?",
+        "type": "MULTIPLE_CHOICE",
+        "options": ["3", "4*", "5"],
+        "required": true
+      },
+      {
+        "title": "Số nào là số chẵn?",
+        "type": "CHECKBOXES",
+        "options": ["1", "2*", "3", "4*"]
+      }
+    ]
+  }]
+}`,
+      html: `<form>
+  <h1>Trắc nghiệm Thủ đô các nước</h1>
+  <p>Thủ đô của Pháp là gì? (bắt buộc)</p>
+  <input type="radio" name="q1"> Luân Đôn<br>
+  <input type="radio" name="q1"> Berlin<br>
+  <input type="radio" name="q1"> Paris*<br>
+  
+  <p>Nước nào sau đây thuộc châu Á?</p>
+  <input type="checkbox"> Nhật Bản*<br>
+  <input type="checkbox"> Brazil<br>
+  <input type="checkbox"> Việt Nam*<br>
+</form>
+`
+    }
+  };
+
   const [view, setView] = useState<'editor' | 'guide'>('editor');
   const [userInput, setUserInput] = useState('');
   const [formDefinition, setFormDefinition] = useState<FormDefinition | null>(null);
@@ -170,7 +284,10 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
   const [isCreatingForm, setIsCreatingForm] = useState(false);
   const [isCopied, setIsCopied] = useState(false);
   const [shouldCreateSheet, setShouldCreateSheet] = useState(false);
+  const [isQuiz, setIsQuiz] = useState(false);
+  const [defaultPoints, setDefaultPoints] = useState(10);
 
+  const currentExamples = isQuiz ? quizExamples[language] : formExamples[language];
 
   useEffect(() => {
     if (formDefinition) {
@@ -189,7 +306,14 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
     setFormDefinition(null);
     setActiveTab('preview');
     try {
-      const definition = await generateFormDefinition(userInput, language);
+      let finalUserInput = userInput;
+      if (isQuiz) {
+        const quizInstruction = language === 'vi' 
+          ? `Đây là một bài kiểm tra. Gán ${defaultPoints} điểm cho mỗi câu hỏi có câu trả lời đúng.`
+          : `This is a quiz. Assign ${defaultPoints} points to each question that has a correct answer.`;
+        finalUserInput = `${quizInstruction}\n\n---\n\n${userInput}`;
+      }
+      const definition = await generateFormDefinition(finalUserInput, language);
       setFormDefinition(definition);
     } catch (e: any) {
       setError(e.message || 'An unknown error occurred.');
@@ -268,23 +392,59 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
                     </button>
                 </div>
             </div>
-            <div className="my-4 p-4 border border-gray-700 rounded-lg w-full text-left bg-gray-800/50">
-                <h4 className="font-semibold text-white mb-3">{t('formGenerator.advancedOptions.title')}</h4>
-                <div className="flex items-start">
-                    <input
-                        id="createSheet"
-                        type="checkbox"
-                        checked={shouldCreateSheet}
-                        onChange={(e) => setShouldCreateSheet(e.target.checked)}
-                        className="h-4 w-4 rounded border-gray-500 text-violet-600 focus:ring-violet-500 bg-gray-700 mt-1"
-                    />
-                    <div className="ml-3 text-sm">
-                        <label htmlFor="createSheet" className="font-medium text-gray-300 cursor-pointer">
-                            {t('formGenerator.advancedOptions.createSheetLabel')}
-                        </label>
-                        <p className="text-gray-500 text-xs mt-1">
-                            {t('formGenerator.advancedOptions.appsScriptOnlyNote')}
-                        </p>
+            <div className="my-4 p-4 border border-gray-700 rounded-lg w-full text-left bg-gray-800/50 space-y-4">
+                <div>
+                    <h4 className="font-semibold text-white mb-3">{t('formGenerator.quiz.title')}</h4>
+                    <div className="flex items-start">
+                         <input
+                            id="isQuiz"
+                            type="checkbox"
+                            checked={isQuiz}
+                            onChange={(e) => setIsQuiz(e.target.checked)}
+                            className="h-4 w-4 rounded border-gray-500 text-violet-600 focus:ring-violet-500 bg-gray-700 mt-1"
+                        />
+                         <div className="ml-3 text-sm">
+                            <label htmlFor="isQuiz" className="font-medium text-gray-300 cursor-pointer">
+                                {t('formGenerator.quiz.makeQuizLabel')}
+                            </label>
+                            <p className="text-gray-500 text-xs mt-1">
+                                {t('formGenerator.quiz.makeQuizNote')}
+                            </p>
+                        </div>
+                    </div>
+                    {isQuiz && (
+                         <div className="mt-3 pl-7">
+                            <label htmlFor="defaultPoints" className="text-sm font-medium text-gray-300">
+                                {t('formGenerator.quiz.defaultPointsLabel')}
+                            </label>
+                            <input
+                                type="number"
+                                id="defaultPoints"
+                                value={defaultPoints}
+                                onChange={(e) => setDefaultPoints(parseInt(e.target.value, 10) || 0)}
+                                className="mt-1 block w-full max-w-xs bg-gray-700 border border-gray-600 rounded-md shadow-sm py-1.5 px-3 text-white focus:outline-none focus:ring-2 focus:ring-violet-500"
+                            />
+                        </div>
+                    )}
+                </div>
+                <div className="pt-4 border-t border-gray-700">
+                    <h4 className="font-semibold text-white mb-3">{t('formGenerator.advancedOptions.title')}</h4>
+                    <div className="flex items-start">
+                        <input
+                            id="createSheet"
+                            type="checkbox"
+                            checked={shouldCreateSheet}
+                            onChange={(e) => setShouldCreateSheet(e.target.checked)}
+                            className="h-4 w-4 rounded border-gray-500 text-violet-600 focus:ring-violet-500 bg-gray-700 mt-1"
+                        />
+                        <div className="ml-3 text-sm">
+                            <label htmlFor="createSheet" className="font-medium text-gray-300 cursor-pointer">
+                                {t('formGenerator.advancedOptions.createSheetLabel')}
+                            </label>
+                            <p className="text-gray-500 text-xs mt-1">
+                                {t('formGenerator.advancedOptions.appsScriptOnlyNote')}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -406,7 +566,7 @@ Vui lòng liệt kê bất kỳ yêu cầu nào về chế độ ăn uống. (Đ
 
              {isLoading && (
                  <div className="flex items-center justify-center h-full">
-                    <svg className="animate-spin h-10 w-10 text-violet-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-10 w-10 text-violet-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="http://www.w3.org/2000/svg">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
