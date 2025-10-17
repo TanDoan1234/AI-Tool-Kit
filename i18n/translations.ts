@@ -29,6 +29,10 @@ const en = {
       title: 'Unit Test Generator',
       description: 'Automatically create unit tests for your functions and classes, helping to ensure code quality.',
     },
+    tool7: {
+      title: 'File Converter',
+      description: 'Convert text content between various formats like Markdown, HTML, CSV, and structured text for PDF/DOCX.',
+    },
     launchTool: 'Launch Tool',
     comingSoon: 'More AI tools coming soon...',
     donationPrompt: 'If you find this useful, consider buying me a coffee! ^^',
@@ -283,6 +287,31 @@ const en = {
     outputTitle: 'Generated Unit Tests',
     copyCode: 'Copy Code',
     copied: 'Copied!',
+  },
+  fileConverter: {
+    title: 'File Converter',
+    subtitle: 'Upload a file or paste content, choose a format, and convert. All processing is done in your browser.',
+    inputPlaceholder: 'Paste your content here...',
+    uploadButton: 'Or Upload a File',
+    supportedFiles: 'Supported: .docx, .md, .html, .txt, .json, .csv',
+    targetFormatLabel: 'Convert to:',
+    formats: {
+        pdf: 'PDF Document',
+        docx: 'Word Document',
+        txt: 'Plain Text (.txt)',
+        md: 'Markdown (.md)',
+        html: 'HTML (.html)',
+        json: 'JSON',
+        csv: 'CSV',
+        xml: 'XML'
+    },
+    convertButton: 'Convert',
+    convertingButton: 'Converting...',
+    error: 'Error',
+    tryAgain: 'Try Again',
+    outputTitle: 'Converted Content',
+    copyCode: 'Copy Content',
+    copied: 'Copied!',
   }
 };
 
@@ -313,6 +342,10 @@ const vi: typeof en = {
     tool6: {
       title: 'Tạo Unit Test',
       description: 'Tự động tạo các bài kiểm thử đơn vị cho các hàm và lớp của bạn, giúp đảm bảo chất lượng mã nguồn.',
+    },
+    tool7: {
+      title: 'Chuyển đổi Tệp',
+      description: 'Chuyển đổi nội dung văn bản giữa các định dạng khác nhau như Markdown, HTML, CSV và văn bản có cấu trúc cho PDF/DOCX.',
     },
     launchTool: 'Mở công cụ',
     comingSoon: 'Sắp có thêm các công cụ AI khác...',
@@ -567,6 +600,31 @@ const vi: typeof en = {
     },
     outputTitle: 'Các Unit Test được tạo',
     copyCode: 'Sao chép mã',
+    copied: 'Đã sao chép!',
+  },
+  fileConverter: {
+    title: 'Trình chuyển đổi Tệp',
+    subtitle: 'Tải tệp lên hoặc dán nội dung, chọn định dạng và chuyển đổi. Mọi quá trình xử lý đều được thực hiện trong trình duyệt của bạn.',
+    inputPlaceholder: 'Dán nội dung của bạn vào đây...',
+    uploadButton: 'Hoặc Tải lên Tệp',
+    supportedFiles: 'Hỗ trợ: .docx, .md, .html, .txt, .json, .csv',
+    targetFormatLabel: 'Chuyển đổi sang:',
+    formats: {
+        pdf: 'Tài liệu PDF',
+        docx: 'Tài liệu Word',
+        txt: 'Văn bản thuần túy (.txt)',
+        md: 'Markdown (.md)',
+        html: 'HTML (.html)',
+        json: 'JSON',
+        csv: 'CSV',
+        xml: 'XML'
+    },
+    convertButton: 'Chuyển đổi',
+    convertingButton: 'Đang chuyển đổi...',
+    error: 'Lỗi',
+    tryAgain: 'Thử lại',
+    outputTitle: 'Nội dung đã chuyển đổi',
+    copyCode: 'Sao chép Nội dung',
     copied: 'Đã sao chép!',
   }
 };

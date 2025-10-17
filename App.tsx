@@ -7,13 +7,14 @@ import DocstringGeneratorApp from './DocstringGeneratorApp';
 import DataTransformerApp from './DataTransformerApp';
 import SqlQueryWriterApp from './SqlQueryWriterApp';
 import UnitTestGeneratorApp from './UnitTestGeneratorApp';
+import FileConverterApp from './FileConverterApp';
 import ApiKeyModal from './components/ApiKeyModal';
 import Header from './components/Header';
 import { getApiKeys, saveApiKeys, isGoogleConfigured as checkGoogleConfig, ApiKeys } from './services/configService';
 import { initGoogleClient, signIn, signOut } from './services/googleFormService';
 import { useLanguage } from './i18n/LanguageContext';
 
-type View = 'home' | 'formGenerator' | 'diagramGenerator' | 'docstringGenerator' | 'dataTransformer' | 'sqlQueryWriter' | 'unitTestGenerator';
+type View = 'home' | 'formGenerator' | 'diagramGenerator' | 'docstringGenerator' | 'dataTransformer' | 'sqlQueryWriter' | 'unitTestGenerator' | 'fileConverter';
 
 // A simple loading spinner component for the language change overlay
 const LoadingSpinner: React.FC = () => (
@@ -83,6 +84,8 @@ export default function App() {
         return <SqlQueryWriterApp onOpenSettings={onOpenSettings} />;
       case 'unitTestGenerator':
         return <UnitTestGeneratorApp onOpenSettings={onOpenSettings} />;
+      case 'fileConverter':
+        return <FileConverterApp onOpenSettings={onOpenSettings} />;
       case 'home':
       default:
         return <HomePage 
@@ -92,6 +95,7 @@ export default function App() {
                   onNavigateToDataTransformerTool={() => navigateTo('dataTransformer')}
                   onNavigateToSqlQueryWriterTool={() => navigateTo('sqlQueryWriter')}
                   onNavigateToUnitTestGeneratorTool={() => navigateTo('unitTestGenerator')}
+                  onNavigateToFileConverterTool={() => navigateTo('fileConverter')}
                />;
     }
   };

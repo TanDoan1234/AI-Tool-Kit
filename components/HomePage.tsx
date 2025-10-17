@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
-import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon, ArrowPathIcon, DatabaseIcon, ShieldCheckIcon } from './icons';
+import { DocumentTextIcon, ChartBarIcon, GithubIcon, LinkedinIcon, GmailIcon, XIcon, CodeIcon, ArrowPathIcon, DatabaseIcon, ShieldCheckIcon, ArrowsRightLeftIcon } from './icons';
 
 interface HomePageProps {
   onNavigateToFormTool: () => void;
@@ -9,6 +9,7 @@ interface HomePageProps {
   onNavigateToDataTransformerTool: () => void;
   onNavigateToSqlQueryWriterTool: () => void;
   onNavigateToUnitTestGeneratorTool: () => void;
+  onNavigateToFileConverterTool: () => void;
 }
 
 const HomePage: React.FC<HomePageProps> = ({ 
@@ -17,7 +18,8 @@ const HomePage: React.FC<HomePageProps> = ({
   onNavigateToDocstringTool, 
   onNavigateToDataTransformerTool,
   onNavigateToSqlQueryWriterTool,
-  onNavigateToUnitTestGeneratorTool
+  onNavigateToUnitTestGeneratorTool,
+  onNavigateToFileConverterTool
 }) => {
   const { t } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
@@ -84,6 +86,12 @@ const HomePage: React.FC<HomePageProps> = ({
                   icon={<ShieldCheckIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
                   titleKey="homepage.tool6.title"
                   descriptionKey="homepage.tool6.description"
+              />
+              <ToolCard
+                  onClick={onNavigateToFileConverterTool}
+                  icon={<ArrowsRightLeftIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors" />}
+                  titleKey="homepage.tool7.title"
+                  descriptionKey="homepage.tool7.description"
               />
           </div>
 

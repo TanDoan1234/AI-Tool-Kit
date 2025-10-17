@@ -34,12 +34,14 @@ export function getApiKeys(): ApiKeys {
   
   // FIX: Safely access Vite environment variables. The 'import.meta.env' object 
   // is injected by Vite and may be undefined in other environments.
-  const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : {};
+  // By setting the fallback to `undefined` and using optional chaining (`?.`), 
+  // we avoid type errors when accessing environment variables that may not exist.
+  const env = (typeof import.meta !== 'undefined' && import.meta.env) ? import.meta.env : undefined;
 
   return {
-    geminiApiKey: parsedKeys.geminiApiKey || env.VITE_GEMINI_API_KEY || '',
-    googleApiKey: parsedKeys.googleApiKey || env.VITE_GOOGLE_API_KEY || '',
-    googleClientId: parsedKeys.googleClientId || env.VITE_GOOGLE_CLIENT_ID || '',
+    geminiApiKey: parsedKeys.geminiApiKey || env?.VITE_GEMINI_API_KEY || '',
+    googleApiKey: parsedKeys.googleApiKey || env?.VITE_GOOGLE_API_KEY || '',
+    googleClientId: parsedKeys.googleClientId || env?.VITE_GOOGLE_CLIENT_ID || '',
   };
 }
 
