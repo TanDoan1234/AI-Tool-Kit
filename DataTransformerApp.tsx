@@ -92,7 +92,7 @@ export default function DataTransformerApp({ onOpenSettings }: DataTransformerAp
           <p className="mt-2 max-w-2xl mx-auto text-md text-gray-400">{t('dataTransformer.subtitle')}</p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:items-start">
           {/* Left Panel: Input */}
           <div className="bg-gray-800 rounded-lg shadow-lg p-6 flex flex-col animate-fade-in-left">
             <div className="flex flex-col flex-grow">

@@ -6,6 +6,7 @@ declare const Papa: any;
 declare const jspdf: any;
 declare const docx: any;
 declare const saveAs: any;
+declare const html_beautify: any;
 
 // Helper to get file extension
 const getExtension = (filename: string) => filename.split('.').pop()?.toLowerCase() || '';
@@ -129,11 +130,17 @@ export async function performConversion({ content, filename, outputFormat }: Con
     // Second, convert from HTML to the desired output format
     switch (outputFormat) {
         case 'html':
-            return { format: 'html', content: htmlContent, isBinary: false, filename: outputFilename };
+            const formattedHtml = html_beautify(htmlContent, {
+                indent_size: 2,
+                end_with_newline: true,
+                wrap_line_length: 120,
+            });
+            return { format: 'html', content: formattedHtml, isBinary: false, filename: outputFilename };
         case 'md':
             return { format: 'markdown', content: htmlToMarkdown(htmlContent), isBinary: false, filename: outputFilename };
         case 'txt':
-            const textContent = getTextFromHtml(htmlContent);
+            // Use the markdown converter as it does a great job of creating structured plain text
+            const textContent = htmlToMarkdown(htmlContent);
             return { format: 'text', content: textContent, isBinary: false, filename: outputFilename };
         case 'pdf':
             const textForPdf = getTextFromHtml(htmlContent);
